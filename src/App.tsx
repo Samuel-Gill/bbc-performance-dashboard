@@ -84,6 +84,7 @@ import {
   REPORTING_TIMEZONE,
 } from "./lib/domain";
 import { saveRecordData, deleteRecordData } from "./lib/records";
+import { calculatedFieldPreview } from "./lib/calculated-preview";
 import {
   clearWorkspace,
   downloadBlob,
@@ -496,11 +497,13 @@ function useDialogFocus(onClose: () => void) {
 function Editor({
   modal,
   data,
+  reportingDate,
   onClose,
   onSave,
 }: {
   modal: NonNullable<Modal>;
   data: DataSet;
+  reportingDate: string;
   onClose: () => void;
   onSave: (
     kind: Kind,
@@ -513,6 +516,10 @@ function Editor({
   const [error, setError] = useState("");
   const editing = Boolean(modal.record);
   const kind = modal.kind;
+  const calculated = useMemo(
+    () => calculatedFieldPreview(data, kind, form, modal.record, reportingDate),
+    [data, kind, form, modal.record, reportingDate],
+  );
   const changeField = (key: string, value: string) => {
     setForm((previous) => {
       if (kind !== "objective") return { ...previous, [key]: value };
@@ -777,6 +784,20 @@ function Editor({
                 {field("updatedBy", "Updated by", "text", undefined, false)}
                 {field("comment", "Update comment", "text", undefined, false)}
               </>
+            )}
+            {calculated && (
+              <section className="calculated-preview full" aria-label="Live calculated Excel fields">
+                <div className="calculated-preview-title">Calculated fields · live preview</div>
+                <p>Read-only values from the same rules used by the dashboard and Excel export.</p>
+                <dl className="calculated-preview-grid">
+                  {calculated.map(({ label, value }) => (
+                    <div key={label}>
+                      <dt>{label}</dt>
+                      <dd>{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
             )}
             {kind === "update" && (
               <label className="apply-update full">
@@ -3316,6 +3337,7 @@ export default function App() {
           key={`${modal.kind}-${modal.record?.id || "new"}`}
           modal={modal}
           data={data}
+          reportingDate={today}
           onClose={() => setModal(null)}
           onSave={saveRecord}
         />
