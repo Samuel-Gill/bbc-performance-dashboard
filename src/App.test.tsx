@@ -87,7 +87,7 @@ async function addObjective(description: string) {
     "Linked goal": "G006",
     "Objective description": description,
     Ministry: "New ministry",
-    "Assigned role": "Ministry lead",
+    "Assigned role": "Team Lead",
     "Accountable person": "Ministry leader",
     "Start date": "2026-01-01",
     "End date": "2026-12-31",

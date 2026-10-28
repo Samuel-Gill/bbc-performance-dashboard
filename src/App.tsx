@@ -62,6 +62,7 @@ import type {
 import {
   avg,
   blankData,
+  CHURCH_ROLES,
   buildDashboard,
   EMPTY_FILTERS,
   formatDelta,
@@ -524,7 +525,7 @@ function Editor({
         {label}
         {required && <i aria-hidden="true">*</i>}
       </span>
-      {options && !["ministry", "role"].includes(key) ? (
+      {options && key !== "ministry" ? (
         <div className={key === "rating" ? "rating-select-wrap" : undefined}>
           <select
             required={required}
@@ -534,7 +535,11 @@ function Editor({
             <option value="">Choose...</option>
             {uniq([...options, form[key] || ""]).map((opt) => (
               <option key={opt} value={opt}>
-                {key === "rating" ? ratingOptionLabel(opt) : opt}
+                {key === "rating"
+                  ? ratingOptionLabel(opt)
+                  : key === "role" && !CHURCH_ROLES.includes(opt)
+                    ? `${opt} (previously assigned)`
+                    : opt}
               </option>
             ))}
           </select>
@@ -652,10 +657,7 @@ function Editor({
                   ...data.lists.ministries,
                   ...data.objectives.map((o) => o.ministry),
                 ])}
-                {field("role", "Assigned role", "text", [
-                  ...data.lists.roles,
-                  ...data.objectives.map((o) => o.role),
-                ])}
+                {field("role", "Assigned role", "text", CHURCH_ROLES)}
                 {field("owner", "Accountable person")}
                 {field("rating", "Objective Status Rating", "text", [
                   "1",
@@ -1465,7 +1467,9 @@ export default function App() {
         ...o,
         label: `${o.value} · ${goalMap.get(o.value)?.title || o.value}`,
       })),
-      role: make(views.map((o) => o.role)),
+      // The role filter is an approved-role selector, not a list of historical
+      // assignments. Old Excel values remain on existing records until edited.
+      role: make(CHURCH_ROLES),
       rating: make(views.map((o) => String(o.rating))).map((o) => ({
         ...o,
         label: `${o.value} · ${RATING_LABELS[Number(o.value)]}`,

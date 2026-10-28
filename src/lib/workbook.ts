@@ -629,13 +629,15 @@ export async function importWorkbook(
         structural.slice(0, 8).join("; ") +
         (structural.length > 8 ? ` (+${structural.length - 8} more)` : ""),
     );
-  // Retain imported categories, including custom values. Do not replace them with defaults.
+  // Keep imported ministries/statuses, but the approved church role list
+  // replaces legacy dropdown options. Existing objective.role values remain
+  // untouched until someone explicitly reassigns those objectives.
   const unique = (items: string[]) => [...new Set(items.filter(Boolean))];
   lists.ministries = unique([
     ...lists.ministries,
     ...objectives.map((o) => o.ministry),
   ]);
-  lists.roles = unique([...CHURCH_ROLES, ...lists.roles, ...objectives.map((o) => o.role)]);
+  lists.roles = [...CHURCH_ROLES];
   for (const key of ["statuses", "priorities", "active", "units"] as const)
     if (!lists[key].length) lists[key] = [...DEFAULT_LISTS[key]];
   lists.statuses = unique([
@@ -1125,7 +1127,9 @@ async function writeControlledLists(zip: JSZip, path: string, data: DataSet) {
   ];
   const lengths: Record<string, number> = {};
   for (const [letter, key, name] of columns) {
-    const values = data.lists[key];
+    // Workspaces saved before the role update can still contain legacy lists.
+    // Always write the approved role choices into the exported Excel lookup.
+    const values = key === "roles" ? CHURCH_ROLES : data.lists[key];
     lengths[name] = Math.max(4, values.length + 3);
     const style =
       children(rowMap.get(4) || sd, "c")

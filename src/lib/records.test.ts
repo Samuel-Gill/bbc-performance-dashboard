@@ -14,7 +14,7 @@ export const objectiveForm = {
   goalId: "G001",
   description: "New ministry objective",
   ministry: "New ministry",
-  role: "Ministry lead",
+  role: "Team Lead",
   owner: "Church leader",
   rating: "4",
   startDate: "2026-01-01",

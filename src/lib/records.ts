@@ -1,5 +1,5 @@
 import type { DataSet, Goal, Objective, KPI, Update } from "./domain";
-import { avg, kpiAchievement, seedIdCounters, toDay } from "./domain";
+import { avg, CHURCH_ROLES, kpiAchievement, seedIdCounters, toDay } from "./domain";
 
 export type RecordKind = "goal" | "objective" | "kpi" | "update";
 export type BusinessRecord = Goal | Objective | KPI | Update;
@@ -66,6 +66,11 @@ export function saveRecordData(
     );
     if (!data.goals.some((g) => g.id === form.goalId))
       throw new RecordError("Select a valid linked goal.");
+    // Older Excel records can retain their previous assignment when edited,
+    // but new or reassigned objectives must use an approved church role.
+    const role = form.role.trim();
+    if (!CHURCH_ROLES.includes(role) && role !== (previous as Objective | undefined)?.role)
+      throw new RecordError("Select an approved church role for this objective.");
     date("startDate");
     date("endDate");
     date("lastUpdateDate");
@@ -82,7 +87,7 @@ export function saveRecordData(
       goalId: form.goalId,
       description: form.description.trim(),
       ministry: form.ministry,
-      role: form.role,
+      role,
       owner: form.owner.trim(),
       rating,
       startDate: form.startDate,
@@ -213,7 +218,7 @@ export function saveRecordData(
     updated.lists = {
       ...data.lists,
       ministries: [...new Set([...data.lists.ministries, o.ministry])],
-      roles: [...new Set([...data.lists.roles, o.role])],
+      roles: [...CHURCH_ROLES],
     };
   }
   return {
