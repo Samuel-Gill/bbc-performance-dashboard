@@ -1221,6 +1221,55 @@ function normalizeOnTrackCriteria(xml: string): string {
     );
 }
 
+/** Reuse the v2 dashboard's built-in P:R Comments field, if present.
+ * The app's older exporter accidentally added a second Comments field in S.
+ * Clean up only that recognizable generated duplicate; never delete unrelated
+ * cells or rewrite the native lookup in P. Keep this as OOXML string surgery:
+ * the original dashboard is a 52 MB sheet with over a million allocated rows.
+ */
+function nativeDashboardComments(source: string): string | null {
+  const exceptionRows =
+    /<row\b[^>]*\br="(8[89]|9[0-8])"[^>]*>[\s\S]*?<\/row>/g;
+  const rows = new Map<string, string>();
+  for (const match of source.matchAll(exceptionRows)) rows.set(match[1], match[0]);
+
+  const findCell = (row: string | undefined, address: string): string | null => {
+    if (!row) return null;
+    const re = new RegExp(
+      `<c\\b[^>]*\\br="${address}"[^>]*(?:\\/>|>[\\s\\S]*?<\\/c>)`,
+    );
+    return re.exec(row)?.[0] ?? null;
+  };
+  // P88 is often a shared-string cell; inspect the original P89 formula.
+  const original = findCell(rows.get("89"), "P89");
+  if (!original || !/<f(?:\s[^>]*)?>/.test(original) ||
+      !original.includes("tblObjectives[Comments]")) return null;
+
+  const duplicateHeader = findCell(rows.get("88"), "S88");
+  const isGeneratedDuplicate =
+    !!duplicateHeader && /<t(?:\s[^>]*)?>Comments<\/t>/.test(duplicateHeader) &&
+    Array.from({ length: 10 }, (_, i) => i + 89).every((n) => {
+      const cell = findCell(rows.get(String(n)), `S${n}`);
+      return !!cell && /<f(?:\s[^>]*)?>/.test(cell) &&
+        cell.includes("tblObjectives[Comments]") && cell.includes(`$B${n}`);
+    });
+  if (!isGeneratedDuplicate) return source; // Preserve any unrelated column S.
+
+  let cleaned = source.replace(exceptionRows, (row, number: string) => {
+    const generated = findCell(row, `S${number}`);
+    return generated ? row.replace(generated, "") : row;
+  });
+  if (!/<c\b[^>]*\br="S\d+"/.test(cleaned)) {
+    // Restore the original hidden-column layout only if no other S cells exist.
+    cleaned = cleaned.replace(
+      /<col min="19" max="19" width="50" customWidth="1"\s*\/><col min="20" max="16383" width="0" hidden="1" customWidth="1"\s*\/>/,
+      '<col min="19" max="16383" width="0" hidden="1" customWidth="1"/>',
+    );
+    cleaned = cleaned.replace(/(<dimension\s+ref="[A-Z]+\d+:)S(\d+")/, "$1R$2");
+  }
+  return cleaned;
+}
+
 /** Add a Comments lookup to older Excel dashboard templates without moving any
  * of the original 1,048,576 dashboard rows or existing formulas/charts.
  * The workbook's original sheet1.xml is ~52 MB, so do NOT DOM-parse it.
@@ -1228,6 +1277,13 @@ function normalizeOnTrackCriteria(xml: string): string {
 async function ensureDashboardComments(zip: JSZip, path: string) {
   const source = await zip.file(path)?.async("string");
   if (!source) throw new Error("Missing Excel Dashboard sheet.");
+  // The native Excel v2 dashboard already includes Comments in merged P:R.
+  // Preserve its on-track formula normalization when skipping legacy S creation.
+  const nativeComments = nativeDashboardComments(source);
+  if (nativeComments !== null) {
+    zip.file(path, normalizeOnTrackCriteria(nativeComments));
+    return;
+  }
   const rowsNeeded = new Set(Array.from({ length: 11 }, (_, i) => String(i + 88)));
   const headerStyle = /<c\s+r="O88"\s+s="(\d+)"/.exec(source)?.[1];
   const bodyStyle = /<c\s+r="O89"\s+s="(\d+)"/.exec(source)?.[1];
