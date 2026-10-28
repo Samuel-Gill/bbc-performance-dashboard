@@ -92,7 +92,7 @@ async function addObjective(description: string) {
     "Start date": "2026-01-01",
     "End date": "2026-12-31",
     "Actual completion": "25",
-    "Objective status": "In Progress",
+    "Objective Progress": "In Progress",
     Priority: "High",
     "Last update date": "2026-10-27",
   }))
@@ -120,7 +120,7 @@ async function addUpdate(objectiveId: string, apply = false) {
     "Linked objective": objectiveId,
     "Update date": "2026-10-27",
     Completion: "50",
-    "Status rating": "4",
+    "Objective Status Rating": "4",
     "KPI achievement": "125",
     "Update comment": "A progress snapshot " + objectiveId,
   }))

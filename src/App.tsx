@@ -657,7 +657,7 @@ function Editor({
                   ...data.objectives.map((o) => o.role),
                 ])}
                 {field("owner", "Accountable person")}
-                {field("rating", "Status rating", "text", [
+                {field("rating", "Objective Status Rating", "text", [
                   "1",
                   "2",
                   "3",
@@ -669,7 +669,7 @@ function Editor({
                 {field("actual", "Actual completion (%)", "number")}
                 {field(
                   "status",
-                  "Objective status",
+                  "Objective Progress",
                   "text",
                   data.lists.statuses,
                 )}
@@ -735,7 +735,7 @@ function Editor({
                 )}
                 {field("date", "Update date", "date")}
                 {field("actual", "Completion (%)", "number")}
-                {field("rating", "Status rating", "text", [
+                {field("rating", "Objective Status Rating", "text", [
                   "1",
                   "2",
                   "3",
