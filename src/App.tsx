@@ -72,7 +72,6 @@ import {
   monthlyTrend,
   objectiveViews,
   RATING_COLORS,
-  RATING_LABELS,
   RATING_PROGRESS_LABELS,
   summarizeBy,
   todayISO,
@@ -253,7 +252,7 @@ function Rating({ rating }: { rating: number }) {
         className="rating-dot"
         style={{ background: RATING_COLORS[rating] || "#9aa6b6" }}
       />
-      {rating} · {RATING_LABELS[rating] || "Unknown"}
+      {rating} · {RATING_PROGRESS_LABELS[rating] || "Unknown"}
     </span>
   );
 }
@@ -340,7 +339,7 @@ function FilterDropdown({
   onChange,
 }: {
   label: string;
-  options: { value: string; label: string }[];
+  options: { value: string; label: string; color?: string }[];
   values: string[];
   onChange: (v: string[]) => void;
 }) {
@@ -371,6 +370,7 @@ function FilterDropdown({
       <button
         aria-expanded={open}
         aria-label={`${label}: ${values.length ? values.length + " selected" : "All"}`}
+        title={label}
         className={"filter-button " + (values.length ? "active" : "")}
         onClick={() => setOpen(!open)}
       >
@@ -398,7 +398,14 @@ function FilterDropdown({
                     )
                   }
                 />
-                {o.label}
+                {o.color && (
+                  <span
+                    className="filter-rating-dot"
+                    style={{ backgroundColor: o.color }}
+                    aria-hidden="true"
+                  />
+                )}
+                <span className="filter-option-label">{o.label}</span>
               </label>
             ))}
           </div>
@@ -828,7 +835,7 @@ function ObjectiveDetail({
     ["End date", row.endDate],
     ["Last update", row.lastUpdateDate],
     ["Last updated by", row.updatedBy || "—"],
-    ["Status rating", `${row.rating} · ${RATING_LABELS[row.rating]}`],
+    ["Objective Status Rating", String(row.rating)],
     ["Objective progress", RATING_PROGRESS_LABELS[row.rating] || "Unknown"],
     ["Actual completion", fmt(row.actual)],
     ["Planned completion", fmt(row.planned)],
@@ -1472,7 +1479,8 @@ export default function App() {
       role: make(CHURCH_ROLES),
       rating: make(views.map((o) => String(o.rating))).map((o) => ({
         ...o,
-        label: `${o.value} · ${RATING_LABELS[Number(o.value)]}`,
+        label: `${o.value} · ${RATING_PROGRESS_LABELS[Number(o.value)]}`,
+        color: RATING_COLORS[Number(o.value)],
       })),
       status: make(views.map((o) => o.status)),
       priority: make(views.map((o) => o.priority)),
@@ -1712,7 +1720,7 @@ export default function App() {
   }));
   const ministrySummaries = summarizeBy(filtered, (o) => o.ministry);
   const ratings = [1, 2, 3, 4, 5].map((n) => ({
-    name: RATING_LABELS[n],
+    name: `${n} · ${RATING_PROGRESS_LABELS[n]}`,
     rating: n,
     value: filtered.filter((o) => o.rating === n).length,
     fill: RATING_COLORS[n],
@@ -1956,7 +1964,7 @@ export default function App() {
                           ministry: "Ministry",
                           goalId: "Goal",
                           role: "Assigned role",
-                          rating: "Status rating",
+                          rating: "Objective Status Rating",
                           status: "Status",
                           priority: "Priority",
                           year: "Year",
@@ -2168,7 +2176,7 @@ export default function App() {
                 </ChartBox>
                 <ChartBox
                   empty={!filtered.length}
-                  title="Status rating mix"
+                  title="Objective Status Rating mix"
                   sub="Distribution across five performance levels"
                 >
                   <div className="rating-chart">
@@ -2205,9 +2213,8 @@ export default function App() {
                             className="legend-circle"
                             style={{ background: r.fill }}
                           />
-                          <span className="rating-legend-label" title={RATING_PROGRESS_LABELS[r.rating]}>
+                          <span className="rating-legend-label" title={r.name}>
                             {r.name}
-                            <small>{RATING_PROGRESS_LABELS[r.rating]}</small>
                           </span>
                           <strong>{r.value}</strong>
                         </div>
@@ -2562,7 +2569,7 @@ export default function App() {
                             <th>GOAL / MINISTRY</th>
                             <th>PROGRESS</th>
                             <th>VARIANCE</th>
-                            <th>STATUS RATING</th>
+                            <th>OBJECTIVE STATUS RATING</th>
                             <th>PRIORITY</th>
                             <th>END DATE</th>
                             <th>ATTENTION</th>
