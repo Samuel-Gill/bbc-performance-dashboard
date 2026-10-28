@@ -92,7 +92,7 @@ async function addObjective(description: string) {
     "Start date": "2026-01-01",
     "End date": "2026-12-31",
     "Actual completion": "25",
-    "Objective Progress": "In Progress",
+    "Objective Progress": "Slightly Ahead of Schedule",
     Priority: "High",
     "Last update date": "2026-10-27",
   }))
@@ -170,6 +170,26 @@ describe("React UI integration (DOM, not a rendered browser)", () => {
       fireEvent.click(dialog.getByRole("button", { name: "Cancel" }));
     }
   });
+  it("shows only the five schedule statuses and synchronizes the rating and progress inputs", async () => {
+    await start();
+    await upload();
+    nav("Objectives");
+    fireEvent.click(screen.getByRole("button", { name: /Add objective/i }));
+    const dialog = within(screen.getByRole("dialog"));
+    const progress = dialog.getByRole("combobox", { name: /Objective Progress/i }) as HTMLSelectElement;
+    const rating = dialog.getByRole("combobox", { name: /Objective Status Rating/i }) as HTMLSelectElement;
+    expect(within(progress).getAllByRole("option").slice(1).map((x) => x.textContent)).toEqual([
+      "Significantly Behind Schedule", "Behind schedule", "On Schedule",
+      "Slightly Ahead of Schedule", "Ahead of Schedule",
+    ]);
+    expect(progress.value).toBe("Slightly Ahead of Schedule");
+    fireEvent.change(rating, { target: { value: "1" } });
+    expect(progress.value).toBe("Significantly Behind Schedule");
+    fireEvent.change(progress, { target: { value: "Ahead of Schedule" } });
+    expect(rating.value).toBe("5");
+    fireEvent.click(dialog.getByRole("button", { name: "Cancel" }));
+  });
+
   it("shows objective comments in Attention required and uses updated status descriptions", async () => {
     const data = fixtureData();
     data.objectives[2].comments = "Contact leadership for the overdue recovery plan.";

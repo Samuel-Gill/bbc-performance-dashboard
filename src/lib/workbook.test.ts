@@ -124,6 +124,7 @@ describe("Excel v2 objective description column compatibility", () => {
     expect(sheet).toContain("Objective Status Description");
     const roundTripped = await importWorkbook(await exported.arrayBuffer());
     expect(roundTripped.data.objectives).toEqual(loaded.data.objectives);
+    expect(roundTripped.data.lists.statuses).toEqual(loaded.data.lists.statuses);
     expect(roundTripped.data.kpis).toEqual(loaded.data.kpis);
     expect(roundTripped.data.updates).toEqual(loaded.data.updates);
   });
@@ -320,7 +321,17 @@ describe("Excel import validation", () => {
     d.kpis[1].target = -10;
     const result = await importWorkbook(await buildTestWorkbook(d));
     expect(result.data.lists.ministries).toContain("A new ministry");
-    expect(result.data.lists.statuses).toContain("Awaiting review");
+    // Legacy/custom statuses are migrated from the numeric rating instead of
+    // being offered as new Objective Progress choices.
+    expect(result.data.objectives[0].status).toBe("Slightly Ahead of Schedule");
+    expect(result.data.lists.statuses).toEqual([
+      "Significantly Behind Schedule",
+      "Behind schedule",
+      "On Schedule",
+      "Slightly Ahead of Schedule",
+      "Ahead of Schedule",
+    ]);
+    expect(result.data.lists.statuses).not.toContain("Awaiting review");
     expect(result.data.kpis[0].actual).toBeNull();
     expect(result.data.kpis[1].target).toBe(-10);
     expect(result.warnings?.some((w) => w.includes("zero target"))).toBe(true);

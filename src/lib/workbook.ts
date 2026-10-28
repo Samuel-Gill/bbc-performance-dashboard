@@ -3,6 +3,8 @@ import type { DataSet, Goal, Objective, KPI, Update, Lists } from "./domain";
 import {
   DEFAULT_LISTS,
   CHURCH_ROLES,
+  OBJECTIVE_PROGRESS,
+  normalizeObjectiveProgress,
   RATING_LABELS,
   objectiveViews,
   kpiAchievement,
@@ -653,7 +655,7 @@ export async function importWorkbook(
         structural.slice(0, 8).join("; ") +
         (structural.length > 8 ? ` (+${structural.length - 8} more)` : ""),
     );
-  // Keep imported ministries/statuses, but the approved church role list
+  // Keep imported ministries, but the approved church role and progress lists
   // replaces legacy dropdown options. Existing objective.role values remain
   // untouched until someone explicitly reassigns those objectives.
   const unique = (items: string[]) => [...new Set(items.filter(Boolean))];
@@ -662,12 +664,9 @@ export async function importWorkbook(
     ...objectives.map((o) => o.ministry),
   ]);
   lists.roles = [...CHURCH_ROLES];
-  for (const key of ["statuses", "priorities", "active", "units"] as const)
+  for (const key of ["priorities", "active", "units"] as const)
     if (!lists[key].length) lists[key] = [...DEFAULT_LISTS[key]];
-  lists.statuses = unique([
-    ...lists.statuses,
-    ...objectives.map((o) => o.status),
-  ]);
+  lists.statuses = [...OBJECTIVE_PROGRESS];
   lists.priorities = unique([
     ...lists.priorities,
     ...objectives.map((o) => o.priority),
@@ -696,11 +695,14 @@ export async function importWorkbook(
     throw new Error(
       "The workbook reporting date is invalid. Correct BBC_ReportingDate in Excel.",
     );
+  // Map legacy status text after other list/relationship normalizations, so
+  // the workspace never merges historical values into the dropdown choices.
+  const normalized = normalizeObjectiveProgress(data);
   return {
-    data,
+    data: normalized,
     buffer,
     filename,
-    warnings: validateDataset(data),
+    warnings: validateDataset(normalized),
     reportingDate,
     liveDate: !reportingDate,
   };
@@ -864,7 +866,7 @@ function rowsForExport(
   reportingDate: string,
   date1904: boolean,
 ) {
-  const views = objectiveViews(data, reportingDate);
+  const views = objectiveViews(normalizeObjectiveProgress(data), reportingDate);
   const omap = new Map(views.map((o) => [o.id, o]));
   const serial = (s: string) => dateToSerial(s, date1904) ?? (s || null);
   const goals = data.goals.map((g) => [
@@ -1153,7 +1155,7 @@ async function writeControlledLists(zip: JSZip, path: string, data: DataSet) {
   for (const [letter, key, name] of columns) {
     // Workspaces saved before the role update can still contain legacy lists.
     // Always write the approved role choices into the exported Excel lookup.
-    const values = key === "roles" ? CHURCH_ROLES : data.lists[key];
+    const values = key === "roles" ? CHURCH_ROLES : key === "statuses" ? OBJECTIVE_PROGRESS : data.lists[key];
     lengths[name] = Math.max(4, values.length + 3);
     const style =
       children(rowMap.get(4) || sd, "c")
@@ -1183,7 +1185,10 @@ async function writeControlledLists(zip: JSZip, path: string, data: DataSet) {
   // Keep Excel's existing Status Description LOOKUP formulas linked to the
   // current church-approved descriptions on every downloaded workbook.
   const header = rowMap.get(3);
-  if (header) setCell(doc, header, "F", "Objective Status Description");
+  if (header) {
+    setCell(doc, header, "F", "Objective Status Description");
+    setCell(doc, header, "G", "Objective Progress");
+  }
   for (let rating = 1; rating <= 5; rating++) {
     let row = rowMap.get(rating + 3);
     if (!row) {
@@ -1199,6 +1204,23 @@ async function writeControlledLists(zip: JSZip, path: string, data: DataSet) {
   return lengths;
 }
 
+/** The five new progress descriptions do not include "Completed".
+ * Preserve the on-track formula's former meaning by excluding actual=100%,
+ * instead of matching a lifecycle string that can no longer occur.
+ * This does not change the rest of the Excel formula or any chart definition.
+ */
+function normalizeOnTrackCriteria(xml: string): string {
+  return xml
+    .replace(
+      /tblObjectives\[Objective Status\],(?:(?:&quot;)|")&lt;&gt;Completed(?:(?:&quot;)|")/g,
+      'tblObjectives[Actual Completion %],"&lt;1"',
+    )
+    .replace(
+      /tblObjectives\[Objective Status\],(?:(?:&quot;)|")Completed(?:(?:&quot;)|")/g,
+      'tblObjectives[Actual Completion %],"&gt;=1"',
+    );
+}
+
 /** Add a Comments lookup to older Excel dashboard templates without moving any
  * of the original 1,048,576 dashboard rows or existing formulas/charts.
  * The workbook's original sheet1.xml is ~52 MB, so do NOT DOM-parse it.
@@ -1209,7 +1231,7 @@ async function ensureDashboardComments(zip: JSZip, path: string) {
   const rowsNeeded = new Set(Array.from({ length: 11 }, (_, i) => String(i + 88)));
   const headerStyle = /<c\s+r="O88"\s+s="(\d+)"/.exec(source)?.[1];
   const bodyStyle = /<c\s+r="O89"\s+s="(\d+)"/.exec(source)?.[1];
-  const changed = source.replace(
+  const changed = normalizeOnTrackCriteria(source).replace(
     /<row\b[^>]*\br="(8[89]|9[0-8])"[^>]*>[\s\S]*?<\/row>/g,
     (row, rowNumber: string) => {
       rowsNeeded.delete(rowNumber);
@@ -1221,7 +1243,12 @@ async function ensureDashboardComments(zip: JSZip, path: string) {
     },
   );
   // Minimal synthetic test workbooks have no Excel dashboard table.
-  if (rowsNeeded.size === 11) return;
+  if (rowsNeeded.size === 11) {
+    // Some workbooks already include Comments in a namespaced dashboard XML.
+    // Even then, the original on-track formula must be brought into sync.
+    zip.file(path, normalizeOnTrackCriteria(source));
+    return;
+  }
   if (rowsNeeded.size)
     throw new Error("Excel Dashboard exception rows 88–98 are incomplete. Check the uploaded template.");
   // The original dashboard hides column S and everything to its right.
@@ -1397,7 +1424,7 @@ export async function exportWorkbook(
   }
   // Small Analysis part only; keep its original layout and native chart ranges.
   if (paths.Analysis) {
-    const doc = xmlParse(await zip.file(paths.Analysis)!.async("string"));
+    const doc = xmlParse(normalizeOnTrackCriteria(await zip.file(paths.Analysis)!.async("string")));
     for (const f of Array.from(doc.getElementsByTagNameNS(NS, "f")))
       if (f.textContent)
         f.textContent = f.textContent.replace(

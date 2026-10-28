@@ -63,6 +63,8 @@ import {
   avg,
   blankData,
   CHURCH_ROLES,
+  OBJECTIVE_PROGRESS,
+  normalizeObjectiveProgress,
   buildDashboard,
   EMPTY_FILTERS,
   formatDelta,
@@ -115,13 +117,12 @@ const LINKS: { name: Page; icon: typeof LayoutDashboard }[] = [
   { name: "Data Quality", icon: ShieldCheck },
   { name: "Workbook", icon: FileSpreadsheet },
 ];
-const STATUS_COLORS: Record<string, string> = {
-  Completed: "#287f69",
-  "In Progress": "#783eb0",
-  "At Risk": "#ba3a4c",
-  "On Hold": "#a66a1f",
-  "Not Started": "#8293ab",
-};
+const STATUS_COLORS: Record<string, string> = Object.fromEntries(
+  [1, 2, 3, 4, 5].map((rating) => [
+    RATING_PROGRESS_LABELS[rating],
+    RATING_COLORS[rating],
+  ]),
+);
 // Native select options cannot reliably render custom HTML swatches, so use
 // recognizable colored symbols in the menu and an exact-color CSS swatch in
 // the collapsed control. Keep the underlying value a plain numeric rating.
@@ -165,7 +166,7 @@ const initial = (
       startDate: str("startDate", todayISO()),
       endDate: str("endDate", todayISO()),
       actual: p("actual"),
-      status: str("status", "Not Started"),
+      status: RATING_PROGRESS_LABELS[Number(str("rating", "4"))],
       priority: str("priority", "Medium"),
       comments: str("comments"),
       lastUpdateDate: str("lastUpdateDate", todayISO()),
@@ -512,6 +513,21 @@ function Editor({
   const [error, setError] = useState("");
   const editing = Boolean(modal.record);
   const kind = modal.kind;
+  const changeField = (key: string, value: string) => {
+    setForm((previous) => {
+      if (kind !== "objective") return { ...previous, [key]: value };
+      if (key === "rating") return {
+        ...previous,
+        rating: value,
+        status: RATING_PROGRESS_LABELS[Number(value)] || previous.status,
+      };
+      if (key === "status") {
+        const rating = OBJECTIVE_PROGRESS.indexOf(value) + 1;
+        return { ...previous, status: value, rating: rating ? String(rating) : previous.rating };
+      }
+      return { ...previous, [key]: value };
+    });
+  };
   const field = (
     key: string,
     label: string,
@@ -537,10 +553,10 @@ function Editor({
           <select
             required={required}
             value={form[key] || ""}
-            onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+            onChange={(e) => changeField(key, e.target.value)}
           >
             <option value="">Choose...</option>
-            {uniq([...options, form[key] || ""]).map((opt) => (
+            {(key === "status" ? [...OBJECTIVE_PROGRESS] : uniq([...options, form[key] || ""])).map((opt) => (
               <option key={opt} value={opt}>
                 {key === "rating"
                   ? ratingOptionLabel(opt)
@@ -562,7 +578,7 @@ function Editor({
         <textarea
           rows={key === "description" ? 3 : 2}
           value={form[key] || ""}
-          onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+          onChange={(e) => changeField(key, e.target.value)}
           required={required}
           maxLength={32767}
         />
@@ -573,7 +589,7 @@ function Editor({
             step={type === "number" ? "any" : undefined}
             list={options ? `options-${key}` : undefined}
             value={form[key] ?? ""}
-            onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+            onChange={(e) => changeField(key, e.target.value)}
             required={required}
             maxLength={32767}
           />
@@ -680,7 +696,7 @@ function Editor({
                   "status",
                   "Objective Progress",
                   "text",
-                  data.lists.statuses,
+                  OBJECTIVE_PROGRESS,
                 )}
                 {field("priority", "Priority", "text", data.lists.priorities)}
                 {field("lastUpdateDate", "Last update date", "date")}
@@ -783,7 +799,7 @@ function Editor({
             {kind === "objective" && editing && (
               <p className="form-note full">
                 Changing completion or rating also adds a historical snapshot.
-                Status and completion remain separate workbook fields.
+                Objective Progress follows its 1–5 rating; completion remains a separate percentage.
               </p>
             )}
           </div>
@@ -829,7 +845,7 @@ function ObjectiveDetail({
     ["Ministry", row.ministry],
     ["Assigned role", row.role],
     ["Accountable person", row.owner],
-    ["Objective status", row.status],
+    ["Objective Progress", row.status],
     ["Priority", row.priority],
     ["Start date", row.startDate],
     ["End date", row.endDate],
@@ -1328,7 +1344,7 @@ export default function App() {
       try {
         const old = await loadWorkspace().catch(() => null);
         if (old) {
-          setData(seedIdCounters(old.data));
+          setData(normalizeObjectiveProgress(seedIdCounters(old.data)));
           setSource(old.buffer);
           setSourceName(old.filename);
           if (
@@ -1482,7 +1498,7 @@ export default function App() {
         label: `${o.value} · ${RATING_PROGRESS_LABELS[Number(o.value)]}`,
         color: RATING_COLORS[Number(o.value)],
       })),
-      status: make(views.map((o) => o.status)),
+      status: OBJECTIVE_PROGRESS.map((value) => ({ value, label: value })),
       priority: make(views.map((o) => o.priority)),
       year: make(views.map((o) => o.year)),
     };
@@ -1965,7 +1981,7 @@ export default function App() {
                           goalId: "Goal",
                           role: "Assigned role",
                           rating: "Objective Status Rating",
-                          status: "Status",
+                          status: "Objective Progress",
                           priority: "Priority",
                           year: "Year",
                         }[key]
@@ -2984,8 +3000,8 @@ export default function App() {
                 </ChartBox>
                 <ChartBox
                   empty={!filtered.length}
-                  title="Delivery status"
-                  sub="Distribution across objective status categories"
+                  title="Objective Progress"
+                  sub="Distribution across five schedule-performance categories"
                 >
                   <div className="chart-content">
                     <ResponsiveContainer height="100%" width="100%">

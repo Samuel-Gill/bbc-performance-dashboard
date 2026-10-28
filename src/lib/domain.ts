@@ -87,6 +87,21 @@ export const RATING_PROGRESS_LABELS: Record<number, string> = {
   4: "Slightly Ahead of Schedule",
   5: "Ahead of Schedule",
 };
+/** Allowed Objective Progress choices, in the same order as Excel Lists!G4:G8. */
+export const OBJECTIVE_PROGRESS = [1, 2, 3, 4, 5].map(
+  (rating) => RATING_PROGRESS_LABELS[rating],
+);
+/** Normalize old Excel descriptions to the source-of-truth 1–5 rating. */
+export function normalizeObjectiveProgress(data: DataSet): DataSet {
+  return {
+    ...data,
+    objectives: data.objectives.map((o) => ({
+      ...o,
+      status: RATING_PROGRESS_LABELS[o.rating] || o.status,
+    })),
+    lists: { ...data.lists, statuses: [...OBJECTIVE_PROGRESS] },
+  };
+}
 export const CHURCH_ROLES = [
   "Chairperson",
   "Vice Chairperson",
@@ -110,7 +125,7 @@ export const DEFAULT_LISTS: Lists = {
   ministries: [],
   roles: [...CHURCH_ROLES],
   ratings: [1, 2, 3, 4, 5],
-  statuses: ["Not Started", "In Progress", "Completed", "On Hold", "At Risk"],
+  statuses: [...OBJECTIVE_PROGRESS],
   priorities: ["Low", "Medium", "High", "Critical"],
   active: ["Active", "Inactive"],
   units: ["%", "Count", "Score"],
@@ -302,7 +317,9 @@ export function objectiveViews(
       year: Number.isFinite(toDay(o.lastUpdateDate))
         ? o.lastUpdateDate.slice(0, 4)
         : "",
-      onTrack: o.rating >= 4 && !overdue && o.status !== "Completed",
+      // Completion is a numeric measure; Objective Progress now describes
+      // schedule performance, not lifecycle state.
+      onTrack: o.rating >= 4 && !overdue && o.actual < 1,
       atRisk: o.rating <= 2,
     };
   });
@@ -520,9 +537,7 @@ export function validateDataset(data: DataSet) {
       errors.push(`${u.id}: duplicate historical snapshot`);
     snapshots.add(key);
   }
-  for (const o of data.objectives)
-    if (o.status === "Completed" && o.actual < 1)
-      errors.push(`${o.id}: status is Completed but completion is below 100%`);
+  // Completion is indicated by 100% actual completion, not the schedule label.
   return [...new Set(errors)];
 }
 

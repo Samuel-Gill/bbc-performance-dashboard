@@ -166,6 +166,14 @@ describe("Current objective and historical snapshots", () => {
       old,
     );
   });
+  it("writes canonical Objective Progress based on rating and updates the status when applying history", () => {
+    const legacy = { ...objectiveForm, rating: "2", status: "On Hold" };
+    const saved = saveRecordData(data(), "objective", legacy);
+    expect((saved.record as Objective).status).toBe("Behind schedule");
+    const updated = saveRecordData(data(), "update", { ...updateForm, applyToCurrent: "true" });
+    expect(updated.data.objectives[0].status).toBe("Ahead of Schedule");
+  });
+
   it("automatically records history when completion/rating changes in the objective editor", () => {
     const d = data(),
       result = saveRecordData(d, "objective", objectiveForm, d.objectives[0]);

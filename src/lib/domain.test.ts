@@ -81,6 +81,10 @@ describe("Excel-compatible derived metrics", () => {
     expect(v.attention).toBe("Overdue");
     expect(v.exceptionScore).toBe(125);
   });
+  it("excludes fully completed objectives regardless of the new schedule label", () => {
+    const d = data({ ...example, status: "Ahead of Schedule", rating: 5, actual: 1 });
+    expect(buildDashboard(objectiveViews(d, "2026-10-27"), d.kpis).onTrack).toBe(0);
+  });
   it("excludes completed objectives from the on-track count", () => {
     const d = data({ ...example, status: "Completed", rating: 5, actual: 1 });
     const v = objectiveViews(d, "2026-10-27");

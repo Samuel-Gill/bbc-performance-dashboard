@@ -1,5 +1,5 @@
 import type { DataSet, Goal, Objective, KPI, Update } from "./domain";
-import { avg, CHURCH_ROLES, kpiAchievement, seedIdCounters, toDay } from "./domain";
+import { avg, CHURCH_ROLES, RATING_PROGRESS_LABELS, kpiAchievement, seedIdCounters, toDay } from "./domain";
 
 export type RecordKind = "goal" | "objective" | "kpi" | "update";
 export type BusinessRecord = Goal | Objective | KPI | Update;
@@ -93,7 +93,8 @@ export function saveRecordData(
       startDate: form.startDate,
       endDate: form.endDate,
       actual,
-      status: form.status,
+      // Keep the schedule description synchronized with the numerical rating.
+      status: RATING_PROGRESS_LABELS[rating],
       priority: form.priority,
       comments: form.comments || "",
       lastUpdateDate: form.lastUpdateDate,
@@ -207,6 +208,7 @@ export function saveRecordData(
               ...o,
               actual,
               rating,
+              status: RATING_PROGRESS_LABELS[rating],
               lastUpdateDate: form.date,
               updatedBy: form.updatedBy || o.updatedBy,
             }
