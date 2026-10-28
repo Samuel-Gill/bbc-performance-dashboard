@@ -47,9 +47,28 @@ p {
 a {
   text-decoration: none;
 }
+/* Static dashboard copy should use the normal arrow, not the text-insertion
+   I-beam. Text stays selectable/copyable; real editors keep their I-beam. */
 .app-frame {
   display: flex;
   min-height: 100vh;
+  cursor: default;
+}
+.app-frame :where(
+  input:not([type]),
+  input[type="text"],
+  input[type="search"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  textarea,
+  [contenteditable="true"],
+  [contenteditable=""]
+) {
+  cursor: text;
+}
+.app-frame :where(a[href], select, input[type="checkbox"], input[type="radio"], input[type="file"]) {
+  cursor: pointer;
 }
 .sidebar {
   flex: 0 0 246px;
