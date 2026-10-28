@@ -1,0 +1,9 @@
+.cache
+e2e
+src/**/*.test.ts
+src/**/*.test.tsx
+src/lib/fixtures
+src/lib/test-workbook.ts
+test-results
+playwright-report
+docs

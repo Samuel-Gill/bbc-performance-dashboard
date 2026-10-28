@@ -1,0 +1,2488 @@
+{
+  "provenance": "Anonymized calculation inputs extracted from the supplied workbook. Expected values independently calculated with Python datetime and statistics; not produced by React functions.",
+  "data": {
+    "goals": [
+      {
+        "id": "G001",
+        "title": "Strategic goal G001",
+        "owner": "Ministry leader",
+        "description": "Verification goal description",
+        "active": "Active"
+      },
+      {
+        "id": "G002",
+        "title": "Strategic goal G002",
+        "owner": "Ministry leader",
+        "description": "Verification goal description",
+        "active": "Active"
+      },
+      {
+        "id": "G003",
+        "title": "Strategic goal G003",
+        "owner": "Ministry leader",
+        "description": "Verification goal description",
+        "active": "Active"
+      },
+      {
+        "id": "G004",
+        "title": "Strategic goal G004",
+        "owner": "Ministry leader",
+        "description": "Verification goal description",
+        "active": "Active"
+      },
+      {
+        "id": "G005",
+        "title": "Strategic goal G005",
+        "owner": "Ministry leader",
+        "description": "Verification goal description",
+        "active": "Active"
+      }
+    ],
+    "objectives": [
+      {
+        "id": "OBJ001",
+        "goalId": "G001",
+        "description": "Ministry objective OBJ001",
+        "ministry": "Ministry 4",
+        "role": "Role 5",
+        "owner": "Ministry leader",
+        "rating": 4.0,
+        "startDate": "2026-03-28",
+        "endDate": "2027-01-22",
+        "actual": 0.66,
+        "status": "In Progress",
+        "priority": "Medium",
+        "comments": "",
+        "lastUpdateDate": "2026-09-21",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ002",
+        "goalId": "G001",
+        "description": "Ministry objective OBJ002",
+        "ministry": "Ministry 3",
+        "role": "Role 9",
+        "owner": "Ministry leader",
+        "rating": 5.0,
+        "startDate": "2026-05-27",
+        "endDate": "2027-01-22",
+        "actual": 0.72,
+        "status": "In Progress",
+        "priority": "High",
+        "comments": "",
+        "lastUpdateDate": "2026-09-18",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ003",
+        "goalId": "G001",
+        "description": "Ministry objective OBJ003",
+        "ministry": "Ministry 3",
+        "role": "Role 7",
+        "owner": "Ministry leader",
+        "rating": 1.0,
+        "startDate": "2026-01-27",
+        "endDate": "2026-07-26",
+        "actual": 0.55,
+        "status": "At Risk",
+        "priority": "Critical",
+        "comments": "",
+        "lastUpdateDate": "2026-09-15",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ004",
+        "goalId": "G001",
+        "description": "Ministry objective OBJ004",
+        "ministry": "Ministry 1",
+        "role": "Role 5",
+        "owner": "Ministry leader",
+        "rating": 4.0,
+        "startDate": "2026-10-14",
+        "endDate": "2027-03-13",
+        "actual": 0.0,
+        "status": "Not Started",
+        "priority": "Medium",
+        "comments": "",
+        "lastUpdateDate": "2026-09-15",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ005",
+        "goalId": "G002",
+        "description": "Ministry objective OBJ005",
+        "ministry": "Ministry 5",
+        "role": "Role 7",
+        "owner": "Ministry leader",
+        "rating": 5.0,
+        "startDate": "2025-11-28",
+        "endDate": "2026-05-27",
+        "actual": 1.0,
+        "status": "Completed",
+        "priority": "Low",
+        "comments": "",
+        "lastUpdateDate": "2026-05-27",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ006",
+        "goalId": "G002",
+        "description": "Ministry objective OBJ006",
+        "ministry": "Ministry 5",
+        "role": "Role 9",
+        "owner": "Ministry leader",
+        "rating": 3.0,
+        "startDate": "2026-04-27",
+        "endDate": "2026-12-23",
+        "actual": 0.48,
+        "status": "In Progress",
+        "priority": "High",
+        "comments": "",
+        "lastUpdateDate": "2026-09-24",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ007",
+        "goalId": "G002",
+        "description": "Ministry objective OBJ007",
+        "ministry": "Ministry 5",
+        "role": "Role 8",
+        "owner": "Ministry leader",
+        "rating": 4.0,
+        "startDate": "2026-06-26",
+        "endDate": "2026-12-23",
+        "actual": 0.52,
+        "status": "In Progress",
+        "priority": "Medium",
+        "comments": "",
+        "lastUpdateDate": "2026-09-21",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ008",
+        "goalId": "G002",
+        "description": "Ministry objective OBJ008",
+        "ministry": "Ministry 5",
+        "role": "Role 6",
+        "owner": "Ministry leader",
+        "rating": 2.0,
+        "startDate": "2026-05-27",
+        "endDate": "2027-01-22",
+        "actual": 0.25,
+        "status": "On Hold",
+        "priority": "Critical",
+        "comments": "",
+        "lastUpdateDate": "2026-09-18",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ009",
+        "goalId": "G003",
+        "description": "Ministry objective OBJ009",
+        "ministry": "Ministry 3",
+        "role": "Role 1",
+        "owner": "Ministry leader",
+        "rating": 4.0,
+        "startDate": "2026-03-28",
+        "endDate": "2027-01-22",
+        "actual": 0.66,
+        "status": "In Progress",
+        "priority": "Medium",
+        "comments": "",
+        "lastUpdateDate": "2026-09-15",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ010",
+        "goalId": "G003",
+        "description": "Ministry objective OBJ010",
+        "ministry": "Ministry 3",
+        "role": "Role 8",
+        "owner": "Ministry leader",
+        "rating": 5.0,
+        "startDate": "2026-05-27",
+        "endDate": "2027-01-22",
+        "actual": 0.72,
+        "status": "In Progress",
+        "priority": "High",
+        "comments": "",
+        "lastUpdateDate": "2026-09-12",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ011",
+        "goalId": "G003",
+        "description": "Ministry objective OBJ011",
+        "ministry": "Ministry 1",
+        "role": "Role 5",
+        "owner": "Ministry leader",
+        "rating": 1.0,
+        "startDate": "2026-01-27",
+        "endDate": "2026-07-26",
+        "actual": 0.63,
+        "status": "At Risk",
+        "priority": "Critical",
+        "comments": "",
+        "lastUpdateDate": "2026-09-09",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ012",
+        "goalId": "G003",
+        "description": "Ministry objective OBJ012",
+        "ministry": "Ministry 2",
+        "role": "Role 7",
+        "owner": "Ministry leader",
+        "rating": 4.0,
+        "startDate": "2026-10-14",
+        "endDate": "2027-03-13",
+        "actual": 0.0,
+        "status": "Not Started",
+        "priority": "Medium",
+        "comments": "",
+        "lastUpdateDate": "2026-09-15",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ013",
+        "goalId": "G004",
+        "description": "Ministry objective OBJ013",
+        "ministry": "Ministry 6",
+        "role": "Role 4",
+        "owner": "Ministry leader",
+        "rating": 5.0,
+        "startDate": "2025-11-28",
+        "endDate": "2026-05-27",
+        "actual": 1.0,
+        "status": "Completed",
+        "priority": "Low",
+        "comments": "",
+        "lastUpdateDate": "2026-05-27",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ014",
+        "goalId": "G004",
+        "description": "Ministry objective OBJ014",
+        "ministry": "Ministry 6",
+        "role": "Role 1",
+        "owner": "Ministry leader",
+        "rating": 3.0,
+        "startDate": "2026-04-27",
+        "endDate": "2026-12-23",
+        "actual": 0.48,
+        "status": "In Progress",
+        "priority": "High",
+        "comments": "",
+        "lastUpdateDate": "2026-09-18",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ015",
+        "goalId": "G004",
+        "description": "Ministry objective OBJ015",
+        "ministry": "Ministry 6",
+        "role": "Role 4",
+        "owner": "Ministry leader",
+        "rating": 4.0,
+        "startDate": "2026-06-26",
+        "endDate": "2026-12-23",
+        "actual": 0.52,
+        "status": "In Progress",
+        "priority": "Medium",
+        "comments": "",
+        "lastUpdateDate": "2026-09-15",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ016",
+        "goalId": "G004",
+        "description": "Ministry objective OBJ016",
+        "ministry": "Ministry 6",
+        "role": "Role 2",
+        "owner": "Ministry leader",
+        "rating": 2.0,
+        "startDate": "2026-05-27",
+        "endDate": "2027-01-22",
+        "actual": 0.25,
+        "status": "On Hold",
+        "priority": "Critical",
+        "comments": "",
+        "lastUpdateDate": "2026-09-12",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ017",
+        "goalId": "G005",
+        "description": "Ministry objective OBJ017",
+        "ministry": "Ministry 2",
+        "role": "Role 3",
+        "owner": "Ministry leader",
+        "rating": 4.0,
+        "startDate": "2026-03-28",
+        "endDate": "2027-01-22",
+        "actual": 0.66,
+        "status": "In Progress",
+        "priority": "Medium",
+        "comments": "",
+        "lastUpdateDate": "2026-09-09",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ018",
+        "goalId": "G005",
+        "description": "Ministry objective OBJ018",
+        "ministry": "Ministry 2",
+        "role": "Role 3",
+        "owner": "Ministry leader",
+        "rating": 5.0,
+        "startDate": "2026-05-27",
+        "endDate": "2027-01-22",
+        "actual": 0.72,
+        "status": "In Progress",
+        "priority": "High",
+        "comments": "",
+        "lastUpdateDate": "2026-09-24",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ019",
+        "goalId": "G005",
+        "description": "Ministry objective OBJ019",
+        "ministry": "Ministry 2",
+        "role": "Role 7",
+        "owner": "Ministry leader",
+        "rating": 2.0,
+        "startDate": "2026-01-27",
+        "endDate": "2026-07-26",
+        "actual": 0.74,
+        "status": "At Risk",
+        "priority": "Critical",
+        "comments": "",
+        "lastUpdateDate": "2026-09-21",
+        "updatedBy": "Analyst"
+      },
+      {
+        "id": "OBJ020",
+        "goalId": "G005",
+        "description": "Ministry objective OBJ020",
+        "ministry": "Ministry 2",
+        "role": "Role 3",
+        "owner": "Ministry leader",
+        "rating": 4.0,
+        "startDate": "2026-10-14",
+        "endDate": "2027-03-13",
+        "actual": 0.0,
+        "status": "Not Started",
+        "priority": "Medium",
+        "comments": "",
+        "lastUpdateDate": "2026-09-15",
+        "updatedBy": "Analyst"
+      }
+    ],
+    "kpis": [
+      {
+        "id": "KPI001",
+        "objectiveId": "OBJ001",
+        "name": "Measure KPI001",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.9045000000000001,
+        "measurementDate": "2026-09-21",
+        "comment": ""
+      },
+      {
+        "id": "KPI002",
+        "objectiveId": "OBJ001",
+        "name": "Measure KPI002",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.85,
+        "actual": 0.867,
+        "measurementDate": "2026-08-22",
+        "comment": ""
+      },
+      {
+        "id": "KPI003",
+        "objectiveId": "OBJ002",
+        "name": "Measure KPI003",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 1.008,
+        "measurementDate": "2026-09-18",
+        "comment": ""
+      },
+      {
+        "id": "KPI004",
+        "objectiveId": "OBJ002",
+        "name": "Measure KPI004",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 1.0215,
+        "measurementDate": "2026-08-19",
+        "comment": ""
+      },
+      {
+        "id": "KPI005",
+        "objectiveId": "OBJ003",
+        "name": "Measure KPI005",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.5715,
+        "measurementDate": "2026-09-15",
+        "comment": ""
+      },
+      {
+        "id": "KPI006",
+        "objectiveId": "OBJ003",
+        "name": "Measure KPI006",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.5850000000000001,
+        "measurementDate": "2026-08-16",
+        "comment": ""
+      },
+      {
+        "id": "KPI007",
+        "objectiveId": "OBJ004",
+        "name": "Measure KPI007",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.9450000000000001,
+        "measurementDate": "2026-09-15",
+        "comment": ""
+      },
+      {
+        "id": "KPI008",
+        "objectiveId": "OBJ004",
+        "name": "Measure KPI008",
+        "description": "Verification measure",
+        "unit": "Score",
+        "target": 0.9,
+        "actual": 0.9450000000000001,
+        "measurementDate": "2026-08-16",
+        "comment": ""
+      },
+      {
+        "id": "KPI009",
+        "objectiveId": "OBJ005",
+        "name": "Measure KPI009",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.9810000000000001,
+        "measurementDate": "2026-05-27",
+        "comment": ""
+      },
+      {
+        "id": "KPI010",
+        "objectiveId": "OBJ005",
+        "name": "Measure KPI010",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.85,
+        "actual": 0.9392500000000001,
+        "measurementDate": "2026-04-27",
+        "comment": ""
+      },
+      {
+        "id": "KPI011",
+        "objectiveId": "OBJ006",
+        "name": "Measure KPI011",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.7965,
+        "measurementDate": "2026-09-24",
+        "comment": ""
+      },
+      {
+        "id": "KPI012",
+        "objectiveId": "OBJ006",
+        "name": "Measure KPI012",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.85,
+        "actual": 0.765,
+        "measurementDate": "2026-08-25",
+        "comment": ""
+      },
+      {
+        "id": "KPI013",
+        "objectiveId": "OBJ007",
+        "name": "Measure KPI013",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.918,
+        "measurementDate": "2026-09-21",
+        "comment": ""
+      },
+      {
+        "id": "KPI014",
+        "objectiveId": "OBJ007",
+        "name": "Measure KPI014",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.85,
+        "actual": 0.8797499999999999,
+        "measurementDate": "2026-08-22",
+        "comment": ""
+      },
+      {
+        "id": "KPI015",
+        "objectiveId": "OBJ008",
+        "name": "Measure KPI015",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.7155,
+        "measurementDate": "2026-09-18",
+        "comment": ""
+      },
+      {
+        "id": "KPI016",
+        "objectiveId": "OBJ008",
+        "name": "Measure KPI016",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.85,
+        "actual": 0.6885,
+        "measurementDate": "2026-08-19",
+        "comment": ""
+      },
+      {
+        "id": "KPI017",
+        "objectiveId": "OBJ009",
+        "name": "Measure KPI017",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.9450000000000001,
+        "measurementDate": "2026-09-15",
+        "comment": ""
+      },
+      {
+        "id": "KPI018",
+        "objectiveId": "OBJ009",
+        "name": "Measure KPI018",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.891,
+        "measurementDate": "2026-08-16",
+        "comment": ""
+      },
+      {
+        "id": "KPI019",
+        "objectiveId": "OBJ010",
+        "name": "Measure KPI019",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.9810000000000001,
+        "measurementDate": "2026-09-12",
+        "comment": ""
+      },
+      {
+        "id": "KPI020",
+        "objectiveId": "OBJ010",
+        "name": "Measure KPI020",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.9945000000000002,
+        "measurementDate": "2026-08-13",
+        "comment": ""
+      },
+      {
+        "id": "KPI021",
+        "objectiveId": "OBJ011",
+        "name": "Measure KPI021",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.5445,
+        "measurementDate": "2026-09-09",
+        "comment": ""
+      },
+      {
+        "id": "KPI022",
+        "objectiveId": "OBJ011",
+        "name": "Measure KPI022",
+        "description": "Verification measure",
+        "unit": "Score",
+        "target": 0.9,
+        "actual": 0.5445,
+        "measurementDate": "2026-08-10",
+        "comment": ""
+      },
+      {
+        "id": "KPI023",
+        "objectiveId": "OBJ012",
+        "name": "Measure KPI023",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.95,
+        "actual": 0.969,
+        "measurementDate": "2026-09-15",
+        "comment": ""
+      },
+      {
+        "id": "KPI024",
+        "objectiveId": "OBJ012",
+        "name": "Measure KPI024",
+        "description": "Verification measure",
+        "unit": "Count",
+        "target": 0.95,
+        "actual": 0.969,
+        "measurementDate": "2026-08-16",
+        "comment": ""
+      },
+      {
+        "id": "KPI025",
+        "objectiveId": "OBJ013",
+        "name": "Measure KPI025",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 1.0215,
+        "measurementDate": "2026-05-27",
+        "comment": ""
+      },
+      {
+        "id": "KPI026",
+        "objectiveId": "OBJ013",
+        "name": "Measure KPI026",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.85,
+        "actual": 0.9775,
+        "measurementDate": "2026-04-27",
+        "comment": ""
+      },
+      {
+        "id": "KPI027",
+        "objectiveId": "OBJ014",
+        "name": "Measure KPI027",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.8370000000000001,
+        "measurementDate": "2026-09-18",
+        "comment": ""
+      },
+      {
+        "id": "KPI028",
+        "objectiveId": "OBJ014",
+        "name": "Measure KPI028",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.85,
+        "actual": 0.7394999999999999,
+        "measurementDate": "2026-08-19",
+        "comment": ""
+      },
+      {
+        "id": "KPI029",
+        "objectiveId": "OBJ015",
+        "name": "Measure KPI029",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.891,
+        "measurementDate": "2026-09-15",
+        "comment": ""
+      },
+      {
+        "id": "KPI030",
+        "objectiveId": "OBJ015",
+        "name": "Measure KPI030",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.85,
+        "actual": 0.8542500000000001,
+        "measurementDate": "2026-08-16",
+        "comment": ""
+      },
+      {
+        "id": "KPI031",
+        "objectiveId": "OBJ016",
+        "name": "Measure KPI031",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.9,
+        "actual": 0.6885,
+        "measurementDate": "2026-09-12",
+        "comment": ""
+      },
+      {
+        "id": "KPI032",
+        "objectiveId": "OBJ016",
+        "name": "Measure KPI032",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.85,
+        "actual": 0.663,
+        "measurementDate": "2026-08-13",
+        "comment": ""
+      },
+      {
+        "id": "KPI033",
+        "objectiveId": "OBJ017",
+        "name": "Measure KPI033",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.95,
+        "actual": 0.969,
+        "measurementDate": "2026-09-09",
+        "comment": ""
+      },
+      {
+        "id": "KPI034",
+        "objectiveId": "OBJ017",
+        "name": "Measure KPI034",
+        "description": "Verification measure",
+        "unit": "Count",
+        "target": 0.95,
+        "actual": 0.969,
+        "measurementDate": "2026-08-10",
+        "comment": ""
+      },
+      {
+        "id": "KPI035",
+        "objectiveId": "OBJ018",
+        "name": "Measure KPI035",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.95,
+        "actual": 1.07825,
+        "measurementDate": "2026-09-24",
+        "comment": ""
+      },
+      {
+        "id": "KPI036",
+        "objectiveId": "OBJ018",
+        "name": "Measure KPI036",
+        "description": "Verification measure",
+        "unit": "Count",
+        "target": 0.95,
+        "actual": 1.07825,
+        "measurementDate": "2026-08-25",
+        "comment": ""
+      },
+      {
+        "id": "KPI037",
+        "objectiveId": "OBJ019",
+        "name": "Measure KPI037",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.95,
+        "actual": 0.7695,
+        "measurementDate": "2026-09-21",
+        "comment": ""
+      },
+      {
+        "id": "KPI038",
+        "objectiveId": "OBJ020",
+        "name": "Measure KPI038",
+        "description": "Verification measure",
+        "unit": "%",
+        "target": 0.95,
+        "actual": 0.9405,
+        "measurementDate": "2026-09-15",
+        "comment": ""
+      }
+    ],
+    "updates": [
+      {
+        "id": "UPD0001",
+        "objectiveId": "OBJ001",
+        "date": "2026-05-02",
+        "actual": 0.165,
+        "rating": 3.0,
+        "achievement": 0.8058000000000001,
+        "comment": "Historical snapshot UPD0001"
+      },
+      {
+        "id": "UPD0002",
+        "objectiveId": "OBJ001",
+        "date": "2026-06-16",
+        "actual": 0.33,
+        "rating": 3.0,
+        "achievement": 0.8772,
+        "comment": "Historical snapshot UPD0002"
+      },
+      {
+        "id": "UPD0003",
+        "objectiveId": "OBJ001",
+        "date": "2026-07-30",
+        "actual": 0.495,
+        "rating": 4.0,
+        "achievement": 0.9486,
+        "comment": "Historical snapshot UPD0003"
+      },
+      {
+        "id": "UPD0004",
+        "objectiveId": "OBJ001",
+        "date": "2026-09-21",
+        "actual": 0.66,
+        "rating": 4.0,
+        "achievement": 1.02,
+        "comment": "Historical snapshot UPD0004"
+      },
+      {
+        "id": "UPD0005",
+        "objectiveId": "OBJ002",
+        "date": "2026-06-19",
+        "actual": 0.18,
+        "rating": 4.0,
+        "achievement": 0.8848000000000001,
+        "comment": "Historical snapshot UPD0005"
+      },
+      {
+        "id": "UPD0006",
+        "objectiveId": "OBJ002",
+        "date": "2026-07-17",
+        "actual": 0.36,
+        "rating": 4.0,
+        "achievement": 0.9632000000000001,
+        "comment": "Historical snapshot UPD0006"
+      },
+      {
+        "id": "UPD0007",
+        "objectiveId": "OBJ002",
+        "date": "2026-08-15",
+        "actual": 0.54,
+        "rating": 5.0,
+        "achievement": 1.0416,
+        "comment": "Historical snapshot UPD0007"
+      },
+      {
+        "id": "UPD0008",
+        "objectiveId": "OBJ002",
+        "date": "2026-09-18",
+        "actual": 0.72,
+        "rating": 5.0,
+        "achievement": 1.12,
+        "comment": "Historical snapshot UPD0008"
+      },
+      {
+        "id": "UPD0009",
+        "objectiveId": "OBJ003",
+        "date": "2026-03-14",
+        "actual": 0.1375,
+        "rating": 1.0,
+        "achievement": 0.4898,
+        "comment": "Historical snapshot UPD0009"
+      },
+      {
+        "id": "UPD0010",
+        "objectiveId": "OBJ003",
+        "date": "2026-05-11",
+        "actual": 0.275,
+        "rating": 1.0,
+        "achievement": 0.5332,
+        "comment": "Historical snapshot UPD0010"
+      },
+      {
+        "id": "UPD0011",
+        "objectiveId": "OBJ003",
+        "date": "2026-07-08",
+        "actual": 0.4125,
+        "rating": 1.0,
+        "achievement": 0.5766,
+        "comment": "Historical snapshot UPD0011"
+      },
+      {
+        "id": "UPD0012",
+        "objectiveId": "OBJ003",
+        "date": "2026-09-15",
+        "actual": 0.55,
+        "rating": 1.0,
+        "achievement": 0.62,
+        "comment": "Historical snapshot UPD0012"
+      },
+      {
+        "id": "UPD0013",
+        "objectiveId": "OBJ004",
+        "date": "2026-06-26",
+        "actual": 0.0,
+        "rating": 3.0,
+        "achievement": 0.8058000000000001,
+        "comment": "Historical snapshot UPD0013"
+      },
+      {
+        "id": "UPD0014",
+        "objectiveId": "OBJ004",
+        "date": "2026-07-26",
+        "actual": 0.0,
+        "rating": 3.0,
+        "achievement": 0.8772,
+        "comment": "Historical snapshot UPD0014"
+      },
+      {
+        "id": "UPD0015",
+        "objectiveId": "OBJ004",
+        "date": "2026-08-25",
+        "actual": 0.0,
+        "rating": 4.0,
+        "achievement": 0.9486,
+        "comment": "Historical snapshot UPD0015"
+      },
+      {
+        "id": "UPD0016",
+        "objectiveId": "OBJ004",
+        "date": "2026-09-15",
+        "actual": 0.0,
+        "rating": 4.0,
+        "achievement": 1.02,
+        "comment": "Historical snapshot UPD0016"
+      },
+      {
+        "id": "UPD0017",
+        "objectiveId": "OBJ005",
+        "date": "2026-01-03",
+        "actual": 0.25,
+        "rating": 4.0,
+        "achievement": 0.8848000000000001,
+        "comment": "Historical snapshot UPD0017"
+      },
+      {
+        "id": "UPD0018",
+        "objectiveId": "OBJ005",
+        "date": "2026-02-17",
+        "actual": 0.5,
+        "rating": 4.0,
+        "achievement": 0.9632000000000001,
+        "comment": "Historical snapshot UPD0018"
+      },
+      {
+        "id": "UPD0019",
+        "objectiveId": "OBJ005",
+        "date": "2026-04-03",
+        "actual": 0.75,
+        "rating": 5.0,
+        "achievement": 1.0416,
+        "comment": "Historical snapshot UPD0019"
+      },
+      {
+        "id": "UPD0020",
+        "objectiveId": "OBJ005",
+        "date": "2026-05-27",
+        "actual": 1.0,
+        "rating": 5.0,
+        "achievement": 1.12,
+        "comment": "Historical snapshot UPD0020"
+      },
+      {
+        "id": "UPD0021",
+        "objectiveId": "OBJ006",
+        "date": "2026-05-27",
+        "actual": 0.12,
+        "rating": 2.0,
+        "achievement": 0.7110000000000001,
+        "comment": "Historical snapshot UPD0021"
+      },
+      {
+        "id": "UPD0022",
+        "objectiveId": "OBJ006",
+        "date": "2026-07-04",
+        "actual": 0.24,
+        "rating": 2.0,
+        "achievement": 0.774,
+        "comment": "Historical snapshot UPD0022"
+      },
+      {
+        "id": "UPD0023",
+        "objectiveId": "OBJ006",
+        "date": "2026-08-10",
+        "actual": 0.36,
+        "rating": 3.0,
+        "achievement": 0.837,
+        "comment": "Historical snapshot UPD0023"
+      },
+      {
+        "id": "UPD0024",
+        "objectiveId": "OBJ006",
+        "date": "2026-09-24",
+        "actual": 0.48,
+        "rating": 3.0,
+        "achievement": 0.9,
+        "comment": "Historical snapshot UPD0024"
+      },
+      {
+        "id": "UPD0025",
+        "objectiveId": "OBJ007",
+        "date": "2026-07-13",
+        "actual": 0.13,
+        "rating": 3.0,
+        "achievement": 0.8058000000000001,
+        "comment": "Historical snapshot UPD0025"
+      },
+      {
+        "id": "UPD0026",
+        "objectiveId": "OBJ007",
+        "date": "2026-08-04",
+        "actual": 0.26,
+        "rating": 3.0,
+        "achievement": 0.8772,
+        "comment": "Historical snapshot UPD0026"
+      },
+      {
+        "id": "UPD0027",
+        "objectiveId": "OBJ007",
+        "date": "2026-08-26",
+        "actual": 0.39,
+        "rating": 4.0,
+        "achievement": 0.9486,
+        "comment": "Historical snapshot UPD0027"
+      },
+      {
+        "id": "UPD0028",
+        "objectiveId": "OBJ007",
+        "date": "2026-09-21",
+        "actual": 0.52,
+        "rating": 4.0,
+        "achievement": 1.02,
+        "comment": "Historical snapshot UPD0028"
+      },
+      {
+        "id": "UPD0029",
+        "objectiveId": "OBJ008",
+        "date": "2026-06-19",
+        "actual": 0.0625,
+        "rating": 1.0,
+        "achievement": 0.6162000000000001,
+        "comment": "Historical snapshot UPD0029"
+      },
+      {
+        "id": "UPD0030",
+        "objectiveId": "OBJ008",
+        "date": "2026-07-17",
+        "actual": 0.125,
+        "rating": 1.0,
+        "achievement": 0.6708000000000001,
+        "comment": "Historical snapshot UPD0030"
+      },
+      {
+        "id": "UPD0031",
+        "objectiveId": "OBJ008",
+        "date": "2026-08-15",
+        "actual": 0.1875,
+        "rating": 2.0,
+        "achievement": 0.7253999999999999,
+        "comment": "Historical snapshot UPD0031"
+      },
+      {
+        "id": "UPD0032",
+        "objectiveId": "OBJ008",
+        "date": "2026-09-18",
+        "actual": 0.25,
+        "rating": 2.0,
+        "achievement": 0.78,
+        "comment": "Historical snapshot UPD0032"
+      },
+      {
+        "id": "UPD0033",
+        "objectiveId": "OBJ009",
+        "date": "2026-05-01",
+        "actual": 0.165,
+        "rating": 3.0,
+        "achievement": 0.8058000000000001,
+        "comment": "Historical snapshot UPD0033"
+      },
+      {
+        "id": "UPD0034",
+        "objectiveId": "OBJ009",
+        "date": "2026-06-13",
+        "actual": 0.33,
+        "rating": 3.0,
+        "achievement": 0.8772,
+        "comment": "Historical snapshot UPD0034"
+      },
+      {
+        "id": "UPD0035",
+        "objectiveId": "OBJ009",
+        "date": "2026-07-26",
+        "actual": 0.495,
+        "rating": 4.0,
+        "achievement": 0.9486,
+        "comment": "Historical snapshot UPD0035"
+      },
+      {
+        "id": "UPD0036",
+        "objectiveId": "OBJ009",
+        "date": "2026-09-15",
+        "actual": 0.66,
+        "rating": 4.0,
+        "achievement": 1.02,
+        "comment": "Historical snapshot UPD0036"
+      },
+      {
+        "id": "UPD0037",
+        "objectiveId": "OBJ010",
+        "date": "2026-06-18",
+        "actual": 0.18,
+        "rating": 4.0,
+        "achievement": 0.8848000000000001,
+        "comment": "Historical snapshot UPD0037"
+      },
+      {
+        "id": "UPD0038",
+        "objectiveId": "OBJ010",
+        "date": "2026-07-15",
+        "actual": 0.36,
+        "rating": 4.0,
+        "achievement": 0.9632000000000001,
+        "comment": "Historical snapshot UPD0038"
+      },
+      {
+        "id": "UPD0039",
+        "objectiveId": "OBJ010",
+        "date": "2026-08-11",
+        "actual": 0.54,
+        "rating": 5.0,
+        "achievement": 1.0416,
+        "comment": "Historical snapshot UPD0039"
+      },
+      {
+        "id": "UPD0040",
+        "objectiveId": "OBJ010",
+        "date": "2026-09-12",
+        "actual": 0.72,
+        "rating": 5.0,
+        "achievement": 1.12,
+        "comment": "Historical snapshot UPD0040"
+      },
+      {
+        "id": "UPD0041",
+        "objectiveId": "OBJ011",
+        "date": "2026-03-13",
+        "actual": 0.1575,
+        "rating": 1.0,
+        "achievement": 0.4898,
+        "comment": "Historical snapshot UPD0041"
+      },
+      {
+        "id": "UPD0042",
+        "objectiveId": "OBJ011",
+        "date": "2026-05-08",
+        "actual": 0.315,
+        "rating": 1.0,
+        "achievement": 0.5332,
+        "comment": "Historical snapshot UPD0042"
+      },
+      {
+        "id": "UPD0043",
+        "objectiveId": "OBJ011",
+        "date": "2026-07-04",
+        "actual": 0.4725,
+        "rating": 1.0,
+        "achievement": 0.5766,
+        "comment": "Historical snapshot UPD0043"
+      },
+      {
+        "id": "UPD0044",
+        "objectiveId": "OBJ011",
+        "date": "2026-09-09",
+        "actual": 0.63,
+        "rating": 1.0,
+        "achievement": 0.62,
+        "comment": "Historical snapshot UPD0044"
+      },
+      {
+        "id": "UPD0045",
+        "objectiveId": "OBJ012",
+        "date": "2026-06-26",
+        "actual": 0.0,
+        "rating": 3.0,
+        "achievement": 0.8058000000000001,
+        "comment": "Historical snapshot UPD0045"
+      },
+      {
+        "id": "UPD0046",
+        "objectiveId": "OBJ012",
+        "date": "2026-07-26",
+        "actual": 0.0,
+        "rating": 3.0,
+        "achievement": 0.8772,
+        "comment": "Historical snapshot UPD0046"
+      },
+      {
+        "id": "UPD0047",
+        "objectiveId": "OBJ012",
+        "date": "2026-08-25",
+        "actual": 0.0,
+        "rating": 4.0,
+        "achievement": 0.9486,
+        "comment": "Historical snapshot UPD0047"
+      },
+      {
+        "id": "UPD0048",
+        "objectiveId": "OBJ012",
+        "date": "2026-09-15",
+        "actual": 0.0,
+        "rating": 4.0,
+        "achievement": 1.02,
+        "comment": "Historical snapshot UPD0048"
+      },
+      {
+        "id": "UPD0049",
+        "objectiveId": "OBJ013",
+        "date": "2026-01-03",
+        "actual": 0.25,
+        "rating": 4.0,
+        "achievement": 0.8848000000000001,
+        "comment": "Historical snapshot UPD0049"
+      },
+      {
+        "id": "UPD0050",
+        "objectiveId": "OBJ013",
+        "date": "2026-02-17",
+        "actual": 0.5,
+        "rating": 4.0,
+        "achievement": 0.9632000000000001,
+        "comment": "Historical snapshot UPD0050"
+      },
+      {
+        "id": "UPD0051",
+        "objectiveId": "OBJ013",
+        "date": "2026-04-03",
+        "actual": 0.75,
+        "rating": 5.0,
+        "achievement": 1.0416,
+        "comment": "Historical snapshot UPD0051"
+      },
+      {
+        "id": "UPD0052",
+        "objectiveId": "OBJ013",
+        "date": "2026-05-27",
+        "actual": 1.0,
+        "rating": 5.0,
+        "achievement": 1.12,
+        "comment": "Historical snapshot UPD0052"
+      },
+      {
+        "id": "UPD0053",
+        "objectiveId": "OBJ014",
+        "date": "2026-05-26",
+        "actual": 0.12,
+        "rating": 2.0,
+        "achievement": 0.7110000000000001,
+        "comment": "Historical snapshot UPD0053"
+      },
+      {
+        "id": "UPD0054",
+        "objectiveId": "OBJ014",
+        "date": "2026-07-01",
+        "actual": 0.24,
+        "rating": 2.0,
+        "achievement": 0.774,
+        "comment": "Historical snapshot UPD0054"
+      },
+      {
+        "id": "UPD0055",
+        "objectiveId": "OBJ014",
+        "date": "2026-08-06",
+        "actual": 0.36,
+        "rating": 3.0,
+        "achievement": 0.837,
+        "comment": "Historical snapshot UPD0055"
+      },
+      {
+        "id": "UPD0056",
+        "objectiveId": "OBJ014",
+        "date": "2026-09-18",
+        "actual": 0.48,
+        "rating": 3.0,
+        "achievement": 0.9,
+        "comment": "Historical snapshot UPD0056"
+      },
+      {
+        "id": "UPD0057",
+        "objectiveId": "OBJ015",
+        "date": "2026-07-12",
+        "actual": 0.13,
+        "rating": 3.0,
+        "achievement": 0.8058000000000001,
+        "comment": "Historical snapshot UPD0057"
+      },
+      {
+        "id": "UPD0058",
+        "objectiveId": "OBJ015",
+        "date": "2026-08-01",
+        "actual": 0.26,
+        "rating": 3.0,
+        "achievement": 0.8772,
+        "comment": "Historical snapshot UPD0058"
+      },
+      {
+        "id": "UPD0059",
+        "objectiveId": "OBJ015",
+        "date": "2026-08-22",
+        "actual": 0.39,
+        "rating": 4.0,
+        "achievement": 0.9486,
+        "comment": "Historical snapshot UPD0059"
+      },
+      {
+        "id": "UPD0060",
+        "objectiveId": "OBJ015",
+        "date": "2026-09-15",
+        "actual": 0.52,
+        "rating": 4.0,
+        "achievement": 1.02,
+        "comment": "Historical snapshot UPD0060"
+      },
+      {
+        "id": "UPD0061",
+        "objectiveId": "OBJ016",
+        "date": "2026-06-18",
+        "actual": 0.0625,
+        "rating": 1.0,
+        "achievement": 0.6162000000000001,
+        "comment": "Historical snapshot UPD0061"
+      },
+      {
+        "id": "UPD0062",
+        "objectiveId": "OBJ016",
+        "date": "2026-07-15",
+        "actual": 0.125,
+        "rating": 1.0,
+        "achievement": 0.6708000000000001,
+        "comment": "Historical snapshot UPD0062"
+      },
+      {
+        "id": "UPD0063",
+        "objectiveId": "OBJ016",
+        "date": "2026-08-11",
+        "actual": 0.1875,
+        "rating": 2.0,
+        "achievement": 0.7253999999999999,
+        "comment": "Historical snapshot UPD0063"
+      },
+      {
+        "id": "UPD0064",
+        "objectiveId": "OBJ016",
+        "date": "2026-09-12",
+        "actual": 0.25,
+        "rating": 2.0,
+        "achievement": 0.78,
+        "comment": "Historical snapshot UPD0064"
+      },
+      {
+        "id": "UPD0065",
+        "objectiveId": "OBJ017",
+        "date": "2026-04-30",
+        "actual": 0.165,
+        "rating": 3.0,
+        "achievement": 0.8058000000000001,
+        "comment": "Historical snapshot UPD0065"
+      },
+      {
+        "id": "UPD0066",
+        "objectiveId": "OBJ017",
+        "date": "2026-06-10",
+        "actual": 0.33,
+        "rating": 3.0,
+        "achievement": 0.8772,
+        "comment": "Historical snapshot UPD0066"
+      },
+      {
+        "id": "UPD0067",
+        "objectiveId": "OBJ017",
+        "date": "2026-07-21",
+        "actual": 0.495,
+        "rating": 4.0,
+        "achievement": 0.9486,
+        "comment": "Historical snapshot UPD0067"
+      },
+      {
+        "id": "UPD0068",
+        "objectiveId": "OBJ017",
+        "date": "2026-09-09",
+        "actual": 0.66,
+        "rating": 4.0,
+        "achievement": 1.02,
+        "comment": "Historical snapshot UPD0068"
+      },
+      {
+        "id": "UPD0069",
+        "objectiveId": "OBJ018",
+        "date": "2026-06-20",
+        "actual": 0.18,
+        "rating": 4.0,
+        "achievement": 0.8848000000000001,
+        "comment": "Historical snapshot UPD0069"
+      },
+      {
+        "id": "UPD0070",
+        "objectiveId": "OBJ018",
+        "date": "2026-07-20",
+        "actual": 0.36,
+        "rating": 4.0,
+        "achievement": 0.9632000000000001,
+        "comment": "Historical snapshot UPD0070"
+      },
+      {
+        "id": "UPD0071",
+        "objectiveId": "OBJ018",
+        "date": "2026-08-19",
+        "actual": 0.54,
+        "rating": 5.0,
+        "achievement": 1.0416,
+        "comment": "Historical snapshot UPD0071"
+      },
+      {
+        "id": "UPD0072",
+        "objectiveId": "OBJ018",
+        "date": "2026-09-24",
+        "actual": 0.72,
+        "rating": 5.0,
+        "achievement": 1.12,
+        "comment": "Historical snapshot UPD0072"
+      },
+      {
+        "id": "UPD0073",
+        "objectiveId": "OBJ019",
+        "date": "2026-03-15",
+        "actual": 0.185,
+        "rating": 1.0,
+        "achievement": 0.6162000000000001,
+        "comment": "Historical snapshot UPD0073"
+      },
+      {
+        "id": "UPD0074",
+        "objectiveId": "OBJ019",
+        "date": "2026-05-14",
+        "actual": 0.37,
+        "rating": 1.0,
+        "achievement": 0.6708000000000001,
+        "comment": "Historical snapshot UPD0074"
+      },
+      {
+        "id": "UPD0075",
+        "objectiveId": "OBJ019",
+        "date": "2026-07-12",
+        "actual": 0.5549999999999999,
+        "rating": 2.0,
+        "achievement": 0.7253999999999999,
+        "comment": "Historical snapshot UPD0075"
+      },
+      {
+        "id": "UPD0076",
+        "objectiveId": "OBJ019",
+        "date": "2026-09-21",
+        "actual": 0.74,
+        "rating": 2.0,
+        "achievement": 0.78,
+        "comment": "Historical snapshot UPD0076"
+      },
+      {
+        "id": "UPD0077",
+        "objectiveId": "OBJ020",
+        "date": "2026-06-26",
+        "actual": 0.0,
+        "rating": 3.0,
+        "achievement": 0.8058000000000001,
+        "comment": "Historical snapshot UPD0077"
+      },
+      {
+        "id": "UPD0078",
+        "objectiveId": "OBJ020",
+        "date": "2026-07-26",
+        "actual": 0.0,
+        "rating": 3.0,
+        "achievement": 0.8772,
+        "comment": "Historical snapshot UPD0078"
+      },
+      {
+        "id": "UPD0079",
+        "objectiveId": "OBJ020",
+        "date": "2026-08-25",
+        "actual": 0.0,
+        "rating": 4.0,
+        "achievement": 0.9486,
+        "comment": "Historical snapshot UPD0079"
+      },
+      {
+        "id": "UPD0080",
+        "objectiveId": "OBJ020",
+        "date": "2026-09-15",
+        "actual": 0.0,
+        "rating": 4.0,
+        "achievement": 1.02,
+        "comment": "Historical snapshot UPD0080"
+      }
+    ],
+    "lists": {
+      "ministries": [
+        "Ministry 1",
+        "Ministry 2",
+        "Ministry 3",
+        "Ministry 4",
+        "Ministry 5",
+        "Ministry 6"
+      ],
+      "roles": [
+        "Role 1",
+        "Role 2",
+        "Role 3",
+        "Role 4",
+        "Role 5",
+        "Role 6",
+        "Role 7",
+        "Role 8",
+        "Role 9"
+      ],
+      "ratings": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "statuses": [
+        "Not Started",
+        "In Progress",
+        "Completed",
+        "On Hold",
+        "At Risk"
+      ],
+      "priorities": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ],
+      "active": [
+        "Active",
+        "Inactive"
+      ],
+      "units": [
+        "%",
+        "Count",
+        "Score"
+      ],
+      "years": [
+        2025,
+        2026,
+        2027,
+        2028
+      ]
+    }
+  },
+  "expected": {
+    "2026-09-29": {
+      "dashboard": {
+        "goals": 5,
+        "objectives": 20,
+        "kpis": 38,
+        "completed": 2,
+        "actual": 0.528,
+        "planned": 0.5900694444444444,
+        "variance": -0.06206944444444446,
+        "kpi": 0.9611842105263159,
+        "onTrack": 11,
+        "atRisk": 5,
+        "overdue": 3,
+        "underperforming": 3,
+        "exceptions": [
+          "OBJ011",
+          "OBJ003",
+          "OBJ019",
+          "OBJ016",
+          "OBJ008",
+          "OBJ014",
+          "OBJ006"
+        ]
+      },
+      "objectives": [
+        {
+          "id": "OBJ001",
+          "planned": 0.6166666666666667,
+          "variance": 0.043333333333333335,
+          "daysRemaining": 115,
+          "overdue": false,
+          "achievement": 1.0125000000000002,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ002",
+          "planned": 0.5208333333333334,
+          "variance": 0.1991666666666666,
+          "daysRemaining": 115,
+          "overdue": false,
+          "achievement": 1.1275,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ003",
+          "planned": 1,
+          "variance": -0.44999999999999996,
+          "daysRemaining": -65,
+          "overdue": true,
+          "achievement": 0.6425000000000001,
+          "attention": "Overdue",
+          "exceptionScore": 125,
+          "onTrack": false,
+          "atRisk": true
+        },
+        {
+          "id": "OBJ004",
+          "planned": 0,
+          "variance": 0.0,
+          "daysRemaining": 165,
+          "overdue": false,
+          "achievement": 1.05,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ005",
+          "planned": 1,
+          "variance": 0.0,
+          "daysRemaining": -125,
+          "overdue": false,
+          "achievement": 1.0975000000000001,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": false,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ006",
+          "planned": 0.6458333333333334,
+          "variance": -0.1658333333333334,
+          "daysRemaining": 85,
+          "overdue": false,
+          "achievement": 0.8925000000000001,
+          "attention": "Behind Plan",
+          "exceptionScore": 20,
+          "onTrack": false,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ007",
+          "planned": 0.5277777777777778,
+          "variance": -0.007777777777777772,
+          "daysRemaining": 85,
+          "overdue": false,
+          "achievement": 1.0274999999999999,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ008",
+          "planned": 0.5208333333333334,
+          "variance": -0.27083333333333337,
+          "daysRemaining": 115,
+          "overdue": false,
+          "achievement": 0.8025,
+          "attention": "Status Risk",
+          "exceptionScore": 55,
+          "onTrack": false,
+          "atRisk": true
+        },
+        {
+          "id": "OBJ009",
+          "planned": 0.6166666666666667,
+          "variance": 0.043333333333333335,
+          "daysRemaining": 115,
+          "overdue": false,
+          "achievement": 1.02,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ010",
+          "planned": 0.5208333333333334,
+          "variance": 0.1991666666666666,
+          "daysRemaining": 115,
+          "overdue": false,
+          "achievement": 1.0975000000000001,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ011",
+          "planned": 1,
+          "variance": -0.37,
+          "daysRemaining": -65,
+          "overdue": true,
+          "achievement": 0.605,
+          "attention": "Overdue",
+          "exceptionScore": 125,
+          "onTrack": false,
+          "atRisk": true
+        },
+        {
+          "id": "OBJ012",
+          "planned": 0,
+          "variance": 0.0,
+          "daysRemaining": 165,
+          "overdue": false,
+          "achievement": 1.02,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ013",
+          "planned": 1,
+          "variance": 0.0,
+          "daysRemaining": -125,
+          "overdue": false,
+          "achievement": 1.1425,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": false,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ014",
+          "planned": 0.6458333333333334,
+          "variance": -0.1658333333333334,
+          "daysRemaining": 85,
+          "overdue": false,
+          "achievement": 0.9,
+          "attention": "Behind Plan",
+          "exceptionScore": 20,
+          "onTrack": false,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ015",
+          "planned": 0.5277777777777778,
+          "variance": -0.007777777777777772,
+          "daysRemaining": 85,
+          "overdue": false,
+          "achievement": 0.9975,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ016",
+          "planned": 0.5208333333333334,
+          "variance": -0.27083333333333337,
+          "daysRemaining": 115,
+          "overdue": false,
+          "achievement": 0.7725,
+          "attention": "Status Risk",
+          "exceptionScore": 75,
+          "onTrack": false,
+          "atRisk": true
+        },
+        {
+          "id": "OBJ017",
+          "planned": 0.6166666666666667,
+          "variance": 0.043333333333333335,
+          "daysRemaining": 115,
+          "overdue": false,
+          "achievement": 1.02,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ018",
+          "planned": 0.5208333333333334,
+          "variance": 0.1991666666666666,
+          "daysRemaining": 115,
+          "overdue": false,
+          "achievement": 1.135,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ019",
+          "planned": 1,
+          "variance": -0.26,
+          "daysRemaining": -65,
+          "overdue": true,
+          "achievement": 0.8099999999999999,
+          "attention": "Overdue",
+          "exceptionScore": 95,
+          "onTrack": false,
+          "atRisk": true
+        },
+        {
+          "id": "OBJ020",
+          "planned": 0,
+          "variance": 0.0,
+          "daysRemaining": 165,
+          "overdue": false,
+          "achievement": 0.9900000000000001,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        }
+      ],
+      "groups": {
+        "goalId": {
+          "G001": {
+            "count": 4,
+            "actual": 0.48250000000000004,
+            "planned": 0.534375,
+            "variance": -0.051875000000000004,
+            "kpi": 0.9581250000000001
+          },
+          "G002": {
+            "count": 4,
+            "actual": 0.5625,
+            "planned": 0.6736111111111112,
+            "variance": -0.11111111111111113,
+            "kpi": 0.9550000000000001
+          },
+          "G003": {
+            "count": 4,
+            "actual": 0.5025,
+            "planned": 0.534375,
+            "variance": -0.031875000000000014,
+            "kpi": 0.935625
+          },
+          "G004": {
+            "count": 4,
+            "actual": 0.5625,
+            "planned": 0.6736111111111112,
+            "variance": -0.11111111111111113,
+            "kpi": 0.953125
+          },
+          "G005": {
+            "count": 4,
+            "actual": 0.53,
+            "planned": 0.534375,
+            "variance": -0.004375000000000018,
+            "kpi": 0.98875
+          }
+        },
+        "ministry": {
+          "Ministry 1": {
+            "count": 2,
+            "actual": 0.315,
+            "planned": 0.5,
+            "variance": -0.185,
+            "kpi": 0.8275
+          },
+          "Ministry 2": {
+            "count": 5,
+            "actual": 0.424,
+            "planned": 0.4275,
+            "variance": -0.0035000000000000144,
+            "kpi": 0.995
+          },
+          "Ministry 3": {
+            "count": 4,
+            "actual": 0.6625,
+            "planned": 0.6645833333333333,
+            "variance": -0.0020833333333333537,
+            "kpi": 0.971875
+          },
+          "Ministry 4": {
+            "count": 1,
+            "actual": 0.66,
+            "planned": 0.6166666666666667,
+            "variance": 0.043333333333333335,
+            "kpi": 1.0125000000000002
+          },
+          "Ministry 5": {
+            "count": 4,
+            "actual": 0.5625,
+            "planned": 0.6736111111111112,
+            "variance": -0.11111111111111113,
+            "kpi": 0.9550000000000001
+          },
+          "Ministry 6": {
+            "count": 4,
+            "actual": 0.5625,
+            "planned": 0.6736111111111112,
+            "variance": -0.11111111111111113,
+            "kpi": 0.953125
+          }
+        }
+      }
+    },
+    "2026-10-27": {
+      "dashboard": {
+        "goals": 5,
+        "objectives": 20,
+        "kpis": 38,
+        "completed": 2,
+        "actual": 0.528,
+        "planned": 0.6734583333333333,
+        "variance": -0.1454583333333333,
+        "kpi": 0.9611842105263159,
+        "onTrack": 11,
+        "atRisk": 5,
+        "overdue": 3,
+        "underperforming": 3,
+        "exceptions": [
+          "OBJ011",
+          "OBJ003",
+          "OBJ019",
+          "OBJ016",
+          "OBJ008",
+          "OBJ014",
+          "OBJ006",
+          "OBJ015",
+          "OBJ007"
+        ]
+      },
+      "objectives": [
+        {
+          "id": "OBJ001",
+          "planned": 0.71,
+          "variance": -0.04999999999999993,
+          "daysRemaining": 87,
+          "overdue": false,
+          "achievement": 1.0125000000000002,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ002",
+          "planned": 0.6375,
+          "variance": 0.08250000000000002,
+          "daysRemaining": 87,
+          "overdue": false,
+          "achievement": 1.1275,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ003",
+          "planned": 1,
+          "variance": -0.44999999999999996,
+          "daysRemaining": -93,
+          "overdue": true,
+          "achievement": 0.6425000000000001,
+          "attention": "Overdue",
+          "exceptionScore": 125,
+          "onTrack": false,
+          "atRisk": true
+        },
+        {
+          "id": "OBJ004",
+          "planned": 0.08666666666666667,
+          "variance": -0.08666666666666667,
+          "daysRemaining": 137,
+          "overdue": false,
+          "achievement": 1.05,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ005",
+          "planned": 1,
+          "variance": 0.0,
+          "daysRemaining": -153,
+          "overdue": false,
+          "achievement": 1.0975000000000001,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": false,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ006",
+          "planned": 0.7625,
+          "variance": -0.2825,
+          "daysRemaining": 57,
+          "overdue": false,
+          "achievement": 0.8925000000000001,
+          "attention": "Behind Plan",
+          "exceptionScore": 30,
+          "onTrack": false,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ007",
+          "planned": 0.6833333333333333,
+          "variance": -0.16333333333333333,
+          "daysRemaining": 57,
+          "overdue": false,
+          "achievement": 1.0274999999999999,
+          "attention": "Behind Plan",
+          "exceptionScore": 20,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ008",
+          "planned": 0.6375,
+          "variance": -0.38749999999999996,
+          "daysRemaining": 87,
+          "overdue": false,
+          "achievement": 0.8025,
+          "attention": "Status Risk",
+          "exceptionScore": 55,
+          "onTrack": false,
+          "atRisk": true
+        },
+        {
+          "id": "OBJ009",
+          "planned": 0.71,
+          "variance": -0.04999999999999993,
+          "daysRemaining": 87,
+          "overdue": false,
+          "achievement": 1.02,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ010",
+          "planned": 0.6375,
+          "variance": 0.08250000000000002,
+          "daysRemaining": 87,
+          "overdue": false,
+          "achievement": 1.0975000000000001,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ011",
+          "planned": 1,
+          "variance": -0.37,
+          "daysRemaining": -93,
+          "overdue": true,
+          "achievement": 0.605,
+          "attention": "Overdue",
+          "exceptionScore": 125,
+          "onTrack": false,
+          "atRisk": true
+        },
+        {
+          "id": "OBJ012",
+          "planned": 0.08666666666666667,
+          "variance": -0.08666666666666667,
+          "daysRemaining": 137,
+          "overdue": false,
+          "achievement": 1.02,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ013",
+          "planned": 1,
+          "variance": 0.0,
+          "daysRemaining": -153,
+          "overdue": false,
+          "achievement": 1.1425,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": false,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ014",
+          "planned": 0.7625,
+          "variance": -0.2825,
+          "daysRemaining": 57,
+          "overdue": false,
+          "achievement": 0.9,
+          "attention": "Behind Plan",
+          "exceptionScore": 30,
+          "onTrack": false,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ015",
+          "planned": 0.6833333333333333,
+          "variance": -0.16333333333333333,
+          "daysRemaining": 57,
+          "overdue": false,
+          "achievement": 0.9975,
+          "attention": "Behind Plan",
+          "exceptionScore": 20,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ016",
+          "planned": 0.6375,
+          "variance": -0.38749999999999996,
+          "daysRemaining": 87,
+          "overdue": false,
+          "achievement": 0.7725,
+          "attention": "Status Risk",
+          "exceptionScore": 75,
+          "onTrack": false,
+          "atRisk": true
+        },
+        {
+          "id": "OBJ017",
+          "planned": 0.71,
+          "variance": -0.04999999999999993,
+          "daysRemaining": 87,
+          "overdue": false,
+          "achievement": 1.02,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ018",
+          "planned": 0.6375,
+          "variance": 0.08250000000000002,
+          "daysRemaining": 87,
+          "overdue": false,
+          "achievement": 1.135,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        },
+        {
+          "id": "OBJ019",
+          "planned": 1,
+          "variance": -0.26,
+          "daysRemaining": -93,
+          "overdue": true,
+          "achievement": 0.8099999999999999,
+          "attention": "Overdue",
+          "exceptionScore": 95,
+          "onTrack": false,
+          "atRisk": true
+        },
+        {
+          "id": "OBJ020",
+          "planned": 0.08666666666666667,
+          "variance": -0.08666666666666667,
+          "daysRemaining": 137,
+          "overdue": false,
+          "achievement": 0.9900000000000001,
+          "attention": "",
+          "exceptionScore": 0,
+          "onTrack": true,
+          "atRisk": false
+        }
+      ],
+      "groups": {
+        "goalId": {
+          "G001": {
+            "count": 4,
+            "actual": 0.48250000000000004,
+            "planned": 0.6085416666666666,
+            "variance": -0.12604166666666664,
+            "kpi": 0.9581250000000001
+          },
+          "G002": {
+            "count": 4,
+            "actual": 0.5625,
+            "planned": 0.7708333333333333,
+            "variance": -0.20833333333333331,
+            "kpi": 0.9550000000000001
+          },
+          "G003": {
+            "count": 4,
+            "actual": 0.5025,
+            "planned": 0.6085416666666666,
+            "variance": -0.10604166666666665,
+            "kpi": 0.935625
+          },
+          "G004": {
+            "count": 4,
+            "actual": 0.5625,
+            "planned": 0.7708333333333333,
+            "variance": -0.20833333333333331,
+            "kpi": 0.953125
+          },
+          "G005": {
+            "count": 4,
+            "actual": 0.53,
+            "planned": 0.6085416666666666,
+            "variance": -0.07854166666666665,
+            "kpi": 0.98875
+          }
+        },
+        "ministry": {
+          "Ministry 1": {
+            "count": 2,
+            "actual": 0.315,
+            "planned": 0.5433333333333333,
+            "variance": -0.22833333333333333,
+            "kpi": 0.8275
+          },
+          "Ministry 2": {
+            "count": 5,
+            "actual": 0.424,
+            "planned": 0.5041666666666667,
+            "variance": -0.08016666666666665,
+            "kpi": 0.995
+          },
+          "Ministry 3": {
+            "count": 4,
+            "actual": 0.6625,
+            "planned": 0.74625,
+            "variance": -0.08374999999999996,
+            "kpi": 0.971875
+          },
+          "Ministry 4": {
+            "count": 1,
+            "actual": 0.66,
+            "planned": 0.71,
+            "variance": -0.04999999999999993,
+            "kpi": 1.0125000000000002
+          },
+          "Ministry 5": {
+            "count": 4,
+            "actual": 0.5625,
+            "planned": 0.7708333333333333,
+            "variance": -0.20833333333333331,
+            "kpi": 0.9550000000000001
+          },
+          "Ministry 6": {
+            "count": 4,
+            "actual": 0.5625,
+            "planned": 0.7708333333333333,
+            "variance": -0.20833333333333331,
+            "kpi": 0.953125
+          }
+        }
+      }
+    }
+  },
+  "cachedObjectives": [
+    {
+      "id": "OBJ001",
+      "planned": 0.6166666666666667,
+      "variance": 0.043333333333333335,
+      "daysRemaining": 115.0,
+      "overdue": false,
+      "achievement": 1.0125000000000002,
+      "attention": "",
+      "exceptionScore": 0.0
+    },
+    {
+      "id": "OBJ002",
+      "planned": 0.5208333333333334,
+      "variance": 0.1991666666666666,
+      "daysRemaining": 115.0,
+      "overdue": false,
+      "achievement": 1.1275,
+      "attention": "",
+      "exceptionScore": 0.0
+    },
+    {
+      "id": "OBJ003",
+      "planned": 1.0,
+      "variance": -0.44999999999999996,
+      "daysRemaining": -65.0,
+      "overdue": true,
+      "achievement": 0.6425000000000001,
+      "attention": "Overdue",
+      "exceptionScore": 125.0
+    },
+    {
+      "id": "OBJ004",
+      "planned": 0.0,
+      "variance": 0.0,
+      "daysRemaining": 165.0,
+      "overdue": false,
+      "achievement": 1.05,
+      "attention": "",
+      "exceptionScore": 0.0
+    },
+    {
+      "id": "OBJ005",
+      "planned": 1.0,
+      "variance": 0.0,
+      "daysRemaining": -125.0,
+      "overdue": false,
+      "achievement": 1.0975000000000001,
+      "attention": "",
+      "exceptionScore": 0.0
+    },
+    {
+      "id": "OBJ006",
+      "planned": 0.6458333333333334,
+      "variance": -0.1658333333333334,
+      "daysRemaining": 85.0,
+      "overdue": false,
+      "achievement": 0.8925000000000001,
+      "attention": "Behind Plan",
+      "exceptionScore": 20.0
+    },
+    {
+      "id": "OBJ007",
+      "planned": 0.5277777777777778,
+      "variance": -0.007777777777777772,
+      "daysRemaining": 85.0,
+      "overdue": false,
+      "achievement": 1.0274999999999999,
+      "attention": "",
+      "exceptionScore": 0.0
+    },
+    {
+      "id": "OBJ008",
+      "planned": 0.5208333333333334,
+      "variance": -0.27083333333333337,
+      "daysRemaining": 115.0,
+      "overdue": false,
+      "achievement": 0.8025,
+      "attention": "Status Risk",
+      "exceptionScore": 55.0
+    },
+    {
+      "id": "OBJ009",
+      "planned": 0.6166666666666667,
+      "variance": 0.043333333333333335,
+      "daysRemaining": 115.0,
+      "overdue": false,
+      "achievement": 1.02,
+      "attention": "",
+      "exceptionScore": 0.0
+    },
+    {
+      "id": "OBJ010",
+      "planned": 0.5208333333333334,
+      "variance": 0.1991666666666666,
+      "daysRemaining": 115.0,
+      "overdue": false,
+      "achievement": 1.0975000000000001,
+      "attention": "",
+      "exceptionScore": 0.0
+    },
+    {
+      "id": "OBJ011",
+      "planned": 1.0,
+      "variance": -0.37,
+      "daysRemaining": -65.0,
+      "overdue": true,
+      "achievement": 0.605,
+      "attention": "Overdue",
+      "exceptionScore": 125.0
+    },
+    {
+      "id": "OBJ012",
+      "planned": 0.0,
+      "variance": 0.0,
+      "daysRemaining": 165.0,
+      "overdue": false,
+      "achievement": 1.02,
+      "attention": "",
+      "exceptionScore": 0.0
+    },
+    {
+      "id": "OBJ013",
+      "planned": 1.0,
+      "variance": 0.0,
+      "daysRemaining": -125.0,
+      "overdue": false,
+      "achievement": 1.1425,
+      "attention": "",
+      "exceptionScore": 0.0
+    },
+    {
+      "id": "OBJ014",
+      "planned": 0.6458333333333334,
+      "variance": -0.1658333333333334,
+      "daysRemaining": 85.0,
+      "overdue": false,
+      "achievement": 0.9,
+      "attention": "Behind Plan",
+      "exceptionScore": 20.0
+    },
+    {
+      "id": "OBJ015",
+      "planned": 0.5277777777777778,
+      "variance": -0.007777777777777772,
+      "daysRemaining": 85.0,
+      "overdue": false,
+      "achievement": 0.9975,
+      "attention": "",
+      "exceptionScore": 0.0
+    },
+    {
+      "id": "OBJ016",
+      "planned": 0.5208333333333334,
+      "variance": -0.27083333333333337,
+      "daysRemaining": 115.0,
+      "overdue": false,
+      "achievement": 0.7725,
+      "attention": "Status Risk",
+      "exceptionScore": 75.0
+    },
+    {
+      "id": "OBJ017",
+      "planned": 0.6166666666666667,
+      "variance": 0.043333333333333335,
+      "daysRemaining": 115.0,
+      "overdue": false,
+      "achievement": 1.02,
+      "attention": "",
+      "exceptionScore": 0.0
+    },
+    {
+      "id": "OBJ018",
+      "planned": 0.5208333333333334,
+      "variance": 0.1991666666666666,
+      "daysRemaining": 115.0,
+      "overdue": false,
+      "achievement": 1.135,
+      "attention": "",
+      "exceptionScore": 0.0
+    },
+    {
+      "id": "OBJ019",
+      "planned": 1.0,
+      "variance": -0.26,
+      "daysRemaining": -65.0,
+      "overdue": true,
+      "achievement": 0.8099999999999999,
+      "attention": "Overdue",
+      "exceptionScore": 95.0
+    },
+    {
+      "id": "OBJ020",
+      "planned": 0.0,
+      "variance": 0.0,
+      "daysRemaining": 165.0,
+      "overdue": false,
+      "achievement": 0.9900000000000001,
+      "attention": "",
+      "exceptionScore": 0.0
+    }
+  ]
+}

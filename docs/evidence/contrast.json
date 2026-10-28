@@ -1,0 +1,65 @@
+{
+  "scope": "Selected text token pairs; no rendered/browser audit",
+  "pairs": [
+    {
+      "token": "Body",
+      "foreground": "#1c2e43",
+      "background": "#ffffff",
+      "ratio": 13.8
+    },
+    {
+      "token": "Secondary",
+      "foreground": "#526174",
+      "background": "#ffffff",
+      "ratio": 6.32
+    },
+    {
+      "token": "Primary normal",
+      "foreground": "#ffffff",
+      "background": "#235a76",
+      "ratio": 7.51
+    },
+    {
+      "token": "Primary hover",
+      "foreground": "#ffffff",
+      "background": "#18445e",
+      "ratio": 10.36
+    },
+    {
+      "token": "Disabled",
+      "foreground": "#526174",
+      "background": "#e6ebf1",
+      "ratio": 5.28
+    },
+    {
+      "token": "Red badge",
+      "foreground": "#a22c39",
+      "background": "#fdecef",
+      "ratio": 6.23
+    },
+    {
+      "token": "Amber badge",
+      "foreground": "#85510c",
+      "background": "#fff2db",
+      "ratio": 5.97
+    },
+    {
+      "token": "Green badge",
+      "foreground": "#176247",
+      "background": "#e6f4ec",
+      "ratio": 6.44
+    },
+    {
+      "token": "Blue badge",
+      "foreground": "#235778",
+      "background": "#e6f0fa",
+      "ratio": 6.73
+    },
+    {
+      "token": "Sidebar navigation",
+      "foreground": "#d0dce8",
+      "background": "#142d43",
+      "ratio": 10.15
+    }
+  ]
+}

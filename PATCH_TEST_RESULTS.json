@@ -1,0 +1,25 @@
+{
+  "version": "2.0.1",
+  "automatedTests": {
+    "passed": 104,
+    "failed": 0
+  },
+  "protectedStarterAPI": {
+    "passed": 5,
+    "failed": 0
+  },
+  "localHTTPStarter": "Passed; exact original workbook bytes",
+  "typecheck": "Passed",
+  "eslint": "Passed",
+  "productionBuild": "Passed",
+  "workbookSHA256": "795c871679968502be69505a87bcefcd0b4eaaaa39b17a934ead18c114f4d7a0",
+  "originalRecords": {
+    "goals": 5,
+    "objectives": 20,
+    "kpis": 38,
+    "updates": 80
+  },
+  "workbookInPublicOrDist": false,
+  "browserVisualChecks": "Not Tested: browser environment unavailable",
+  "liveVercelDeployment": "Not Tested"
+}

@@ -1,0 +1,35 @@
+{
+  "passed": 100,
+  "failed": 0,
+  "total": 100,
+  "success": true,
+  "files": [
+    {
+      "file": "src/App.test.tsx",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "file": "src/lib/calculations.test.ts",
+      "passed": 38,
+      "failed": 0
+    },
+    {
+      "file": "src/lib/domain.test.ts",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "file": "src/lib/records.test.ts",
+      "passed": 24,
+      "failed": 0
+    },
+    {
+      "file": "src/lib/workbook.test.ts",
+      "passed": 20,
+      "failed": 0
+    }
+  ],
+  "browserTests": "Not Tested (browser launch unavailable)",
+  "nativeExcelRecalculation": "Not Tested"
+}

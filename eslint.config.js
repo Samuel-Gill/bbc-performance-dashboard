@@ -1,0 +1,51 @@
+import js from "@eslint/js";
+import tseslint from "typescript-eslint";
+export default tseslint.config(
+  { ignores: ["dist", "node_modules", "test-results", "playwright-report"] },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    files: ["src/**/*.{ts,tsx}"],
+    languageOptions: {
+      globals: {
+        console: "readonly",
+        window: "readonly",
+        document: "readonly",
+        navigator: "readonly",
+        setTimeout: "readonly",
+        indexedDB: "readonly",
+        DOMParser: "readonly",
+        XMLSerializer: "readonly",
+        URL: "readonly",
+        Blob: "readonly",
+        TextDecoder: "readonly",
+        ChangeEvent: "readonly",
+        IDBDatabase: "readonly",
+        IDBTransaction: "readonly",
+        IDBRequest: "readonly",
+        MouseEvent: "readonly",
+        KeyboardEvent: "readonly",
+        BeforeUnloadEvent: "readonly",
+        FileReader: "readonly",
+        File: "readonly",
+        Node: "readonly",
+        Element: "readonly",
+        Document: "readonly",
+        HTMLElement: "readonly",
+        HTMLInputElement: "readonly",
+        HTMLDivElement: "readonly",
+        Buffer: "readonly",
+        process: "readonly",
+        performance: "readonly",
+        globalThis: "readonly",
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-unused-expressions": [
+        "error",
+        { allowShortCircuit: true, allowTernary: true },
+      ],
+      "prefer-const": "error",
+    },
+  },
+);

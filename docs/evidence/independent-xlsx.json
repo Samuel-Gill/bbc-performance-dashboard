@@ -1,0 +1,52 @@
+{
+  "status": "Passed",
+  "zipCRC": "Passed",
+  "wellFormedXMLParts": 46,
+  "sheets": [
+    "Dashboard",
+    "Goals",
+    "Objective Entry",
+    "KPI Tracking",
+    "Objective Updates",
+    "Analysis",
+    "Lists",
+    "Instructions"
+  ],
+  "counts": {
+    "goals": 6,
+    "objectives": 22,
+    "kpis": 40,
+    "updates": 82
+  },
+  "relationships": "Passed",
+  "uniqueIDs": "Passed",
+  "matchedEditableFields": 1294,
+  "independentDerivedCacheChecks": 154,
+  "tables": [
+    {
+      "name": "tblObjectiveUpdates",
+      "ref": "A1:M301",
+      "calculatedColumns": 6
+    },
+    {
+      "name": "tblKPI",
+      "ref": "A1:R181",
+      "calculatedColumns": 9
+    },
+    {
+      "name": "tblObjectives",
+      "ref": "A1:AC23",
+      "calculatedColumns": 14
+    },
+    {
+      "name": "tblGoals",
+      "ref": "A1:E31",
+      "calculatedColumns": 0
+    }
+  ],
+  "charts": 7,
+  "slicerCaches": 7,
+  "calcChainRemoved": true,
+  "sha256": "00330108d4708efb266bb380703e969a93830c6cb4b8d46d1640b0c874ddd15a",
+  "nativeExcelRecalculation": "Not Tested"
+}

@@ -1,0 +1,25 @@
+{
+  "preservedParts": [
+    "xl/slicerCaches/slicerCache1.xml",
+    "xl/slicerCaches/slicerCache2.xml",
+    "xl/slicerCaches/slicerCache3.xml",
+    "xl/slicerCaches/slicerCache4.xml",
+    "xl/slicerCaches/slicerCache5.xml",
+    "xl/slicerCaches/slicerCache6.xml",
+    "xl/slicerCaches/slicerCache7.xml",
+    "xl/theme/theme1.xml",
+    "xl/styles.xml",
+    "xl/drawings/_rels/drawing1.xml.rels",
+    "xl/drawings/drawing1.xml",
+    "xl/slicers/slicer1.xml",
+    "xl/charts/chart1.xml",
+    "xl/charts/chart2.xml",
+    "xl/charts/chart3.xml",
+    "xl/charts/chart4.xml",
+    "xl/charts/chart5.xml",
+    "xl/charts/chart6.xml",
+    "xl/charts/chart7.xml",
+    "xl/worksheets/sheet1.xml"
+  ],
+  "passed": true
+}
