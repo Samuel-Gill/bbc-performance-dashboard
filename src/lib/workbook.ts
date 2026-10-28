@@ -93,6 +93,23 @@ export const schema = {
   ],
 } as const;
 type SheetName = keyof typeof schema;
+// The church's v2 template renamed only the last calculated objective column.
+// Treat it as an alias, NOT a new field or an extra column: keep all other
+// schema and ordering checks strict to avoid silently corrupting Excel exports.
+const COLUMN_ALIASES: Partial<
+  Record<SheetName, Record<string, readonly string[]>>
+> = {
+  "Objective Entry": { "Status Description": ["Objective Status Description"] },
+};
+function columnMatches(name: SheetName, expected: string, actual: string) {
+  return (
+    actual === expected ||
+    (COLUMN_ALIASES[name]?.[expected] || []).includes(actual)
+  );
+}
+function canonicalColumn(name: SheetName, actual: string) {
+  return schema[name].find((expected) => columnMatches(name, expected, actual));
+}
 const tableName: Record<SheetName, string> = {
   Goals: "tblGoals",
   "Objective Entry": "tblObjectives",
@@ -308,13 +325,18 @@ function mappedRecords(
   const actual = new Map(
     Object.entries(head).map(([letter, text]) => [String(text).trim(), letter]),
   );
-  const missing = headers.filter((h) => !actual.has(h));
+  const columnFor = (header: string) =>
+    actual.get(header) ||
+    (COLUMN_ALIASES[name]?.[header] || [])
+      .map((alias) => actual.get(alias))
+      .find((letter) => letter !== undefined);
+  const missing = headers.filter((h) => !columnFor(h));
   if (missing.length)
     throw new Error(
       "Workbook sheet headers do not match the template. Missing: " +
         missing.join(", "),
     );
-  if (headers.some((h, i) => actual.get(h) !== col(i)))
+  if (headers.some((h, i) => columnFor(h) !== col(i)))
     throw new Error(
       "Keep worksheet columns in the original template order. Rows may be reordered freely.",
     );
@@ -326,7 +348,7 @@ function mappedRecords(
   for (const [rowIndex, raw] of rows) {
     if (rowIndex < 2) continue;
     const data: Record<string, string | number | null> = {};
-    for (const h of headers) data[h] = raw[actual.get(h) || ""] ?? null;
+    for (const h of headers) data[h] = raw[columnFor(h) || ""] ?? null;
     if (str(data[headers[0]]).trim()) output.push(data);
     else {
       const inputs = headers.filter((_, i) =>
@@ -412,7 +434,9 @@ export async function importWorkbook(
     );
     if (
       columns.length !== schema[name].length ||
-      columns.some((c, i) => c.getAttribute("name") !== schema[name][i])
+      columns.some((c, i) =>
+        !columnMatches(name, schema[name][i], c.getAttribute("name") || ""),
+      )
     )
       throw new Error(
         `Excel table ${tableName[name]} has incompatible columns. Restore the original template columns.`,
@@ -1243,6 +1267,17 @@ export async function exportWorkbook(
         const header = c.getAttribute("name") || "";
         f.textContent = correctedFormula(name, header, f.textContent);
         formulas[header] = f.textContent;
+      }
+    }
+    // Map the v2 alias back to our internal column key. The actual table
+    // column name and its calculated formula remain unchanged in the XLSX.
+    const sheet = (Object.keys(tableName) as SheetName[]).find(
+      (key) => tableName[key] === name,
+    );
+    if (sheet) {
+      for (const [header, formula] of Object.entries(formulas)) {
+        const canonical = canonicalColumn(sheet, header);
+        if (canonical && canonical !== header) formulas[canonical] = formula;
       }
     }
     tableFormulas[name] = formulas;

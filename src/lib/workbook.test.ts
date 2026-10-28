@@ -97,6 +97,81 @@ describe("church lookup and Excel attention comment compatibility", () => {
   });
 });
 
+describe("Excel v2 objective description column compatibility", () => {
+  it("accepts the renamed calculated column without changing its formula on export", async () => {
+    const v2Formula =
+      'IF(tblObjectives[[#This Row],[Status Rating]]="","",INDEX(Lists!$F$4:$F$8,tblObjectives[[#This Row],[Status Rating]]))';
+    const renamed = await rewrite(synthetic, "xl/tables/table2.xml", (xml) =>
+      xml
+        .replace('name="Status Description"', 'name="Objective Status Description"')
+        .replace(
+          /(<tableColumn id="29"[^>]*><calculatedColumnFormula>)[\s\S]*?(<\/calculatedColumnFormula>)/,
+          (_match, start: string, end: string) => start + v2Formula + end,
+        ),
+    );
+    const buffer = await rewrite(renamed, testPaths["Objective Entry"], (xml) =>
+      xml.replace("Status Description", "Objective Status Description"),
+    );
+    const loaded = await importWorkbook(buffer);
+    expect(loaded.data.objectives).toHaveLength(20);
+    const exported = await exportWorkbook(buffer, loaded.data, asOf);
+    const zip = await JSZip.loadAsync(await exported.arrayBuffer());
+    const table = await zip.file("xl/tables/table2.xml")!.async("string");
+    const sheet = await zip.file(testPaths["Objective Entry"])!.async("string");
+    expect(table).toContain('name="Objective Status Description"');
+    expect(table).toContain("INDEX(Lists!$F$4:$F$8");
+    expect(sheet).toContain("INDEX(Lists!$F$4:$F$8");
+    expect(sheet).toContain("Objective Status Description");
+    const roundTripped = await importWorkbook(await exported.arrayBuffer());
+    expect(roundTripped.data.objectives).toEqual(loaded.data.objectives);
+    expect(roundTripped.data.kpis).toEqual(loaded.data.kpis);
+    expect(roundTripped.data.updates).toEqual(loaded.data.updates);
+  });
+  it("still rejects unexpected table column names", async () => {
+    const renamed = await rewrite(synthetic, "xl/tables/table2.xml", (xml) =>
+      xml.replace('name="Status Description"', 'name="Unrecognized Column"'),
+    );
+    await expect(importWorkbook(renamed)).rejects.toThrow(
+      "incompatible columns",
+    );
+  });
+  it.runIf(Boolean(process.env.BBC_V2_WORKBOOK_PATH))(
+    "imports and round-trips the uploaded Excel v2 workbook without losing charts or formulas",
+    async () => {
+      const input = Uint8Array.from(
+        readFileSync(process.env.BBC_V2_WORKBOOK_PATH!),
+      ).buffer;
+      const original = await JSZip.loadAsync(input);
+      const loaded = await importWorkbook(input);
+      expect(loaded.data.goals.length).toBeGreaterThan(0);
+      expect(loaded.data.objectives.length).toBeGreaterThan(20);
+      expect(validateRelationships(loaded.data)).toEqual([]);
+      const output = await exportWorkbook(input, loaded.data, asOf);
+      const fresh = await importWorkbook(await output.arrayBuffer());
+      expect(fresh.data.objectives).toEqual(loaded.data.objectives);
+      expect(fresh.data.kpis).toEqual(loaded.data.kpis);
+      expect(fresh.data.updates).toEqual(loaded.data.updates);
+      const result = await JSZip.loadAsync(await output.arrayBuffer());
+      for (const path of Object.keys(original.files).filter((p) =>
+        /^xl\/(charts|drawings|slicers|slicerCaches)\//.test(p),
+      )) {
+        expect(await result.file(path)!.async("uint8array"), path).toEqual(
+          await original.file(path)!.async("uint8array"),
+        );
+      }
+      const oldFormula = await original
+        .file("xl/tables/table2.xml")!
+        .async("string");
+      const newFormula = await result
+        .file("xl/tables/table2.xml")!
+        .async("string");
+      expect(oldFormula).toContain("INDEX(Lists!$F$4:$F$8");
+      expect(newFormula).toContain("INDEX(Lists!$F$4:$F$8");
+      expect(newFormula).toContain('name="Objective Status Description"');
+    },
+  );
+});
+
 describe("Excel import validation", () => {
   it("reads Excel files through FileReader when File.arrayBuffer is unavailable", async () => {
     const file = new File([new Uint8Array(synthetic)], "legacy-browser.xlsx");
