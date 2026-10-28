@@ -3403,3 +3403,17 @@ input:focus-visible {
 .snapshot-key i {
   background: #783eb0;
 }
+
+/* Church rating guide: keep the complete label and progress meaning readable. */
+.rating-legend { max-width: 340px; width: 100%; }
+.rating-legend-label { white-space: normal; min-width: 0; line-height: 1.35; color: #292038; }
+.rating-legend-label small { display: block; font-size: 12px; color: #4a4153; margin-top: 3px; }
+/* Only the Attention Required table acquires a wider, wrapping comments cell. */
+.attention-comments {
+  min-width: 190px;
+  max-width: 340px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+  color: #292f3b;
+}

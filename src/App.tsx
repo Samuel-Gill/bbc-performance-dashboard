@@ -72,6 +72,7 @@ import {
   objectiveViews,
   RATING_COLORS,
   RATING_LABELS,
+  RATING_PROGRESS_LABELS,
   summarizeBy,
   todayISO,
   toDay,
@@ -516,7 +517,9 @@ function Editor({
           <option value="">Choose...</option>
           {uniq([...options, form[key] || ""]).map((opt) => (
             <option key={opt} value={opt}>
-              {opt}
+              {key === "rating"
+                ? `${opt} · ${RATING_LABELS[Number(opt)]} — ${RATING_PROGRESS_LABELS[Number(opt)]}`
+                : opt}
             </option>
           ))}
         </select>
@@ -801,6 +804,7 @@ function ObjectiveDetail({
     ["Last update", row.lastUpdateDate],
     ["Last updated by", row.updatedBy || "—"],
     ["Status rating", `${row.rating} · ${RATING_LABELS[row.rating]}`],
+    ["Objective progress", RATING_PROGRESS_LABELS[row.rating] || "Unknown"],
     ["Actual completion", fmt(row.actual)],
     ["Planned completion", fmt(row.planned)],
     ["Variance", formatDelta(row.variance)],
@@ -1692,7 +1696,7 @@ export default function App() {
     kpi: withPercent(r.kpi),
   }));
   const attention = overview.exceptions.filter((o) =>
-    matchText(o.id, o.description, o.goalName, o.ministry, o.attention),
+    matchText(o.id, o.description, o.goalName, o.ministry, o.attention, o.comments),
   );
   const onTrackRate = filtered.length
     ? overview.onTrack / filtered.length
@@ -2174,7 +2178,10 @@ export default function App() {
                             className="legend-circle"
                             style={{ background: r.fill }}
                           />
-                          <span>{r.name}</span>
+                          <span className="rating-legend-label" title={RATING_PROGRESS_LABELS[r.rating]}>
+                            {r.name}
+                            <small>{RATING_PROGRESS_LABELS[r.rating]}</small>
+                          </span>
                           <strong>{r.value}</strong>
                         </div>
                       ))}
@@ -2337,6 +2344,7 @@ export default function App() {
                         <th>VARIANCE</th>
                         <th>KPI</th>
                         <th>ISSUE</th>
+                        <th>COMMENTS</th>
                         <th>SCORE</th>
                       </tr>
                     </thead>
@@ -2366,6 +2374,9 @@ export default function App() {
                             <Pill tone={o.overdue ? "red" : "amber"}>
                               {o.attention}
                             </Pill>
+                          </td>
+                          <td className="attention-comments" title={o.comments || "No comments recorded"}>
+                            {o.comments?.trim() || "—"}
                           </td>
                           <td>
                             <b>{o.exceptionScore}</b>

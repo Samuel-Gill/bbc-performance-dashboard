@@ -76,6 +76,27 @@ const uform = {
   applyToCurrent: "false",
 };
 
+describe("church lookup and Excel attention comment compatibility", () => {
+  it("adds a formula-based comments column and reveals only the new column on legacy dashboards", async () => {
+    const zip = await JSZip.loadAsync(synthetic);
+    const dashboard = `<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><dimension ref="A1:R1048576"/><cols><col min="19" max="16383" width="0" hidden="1" customWidth="1"/></cols><sheetData>${Array.from({length: 11}, (_, i) => `<row r="${i+88}"><c r="B${i+88}" t="inlineStr"><is><t>OBJ003</t></is></c></row>`).join("")}</sheetData></worksheet>`;
+    zip.file(testPaths.Dashboard, dashboard);
+    const out = await exportWorkbook(
+      await zip.generateAsync({ type: "arraybuffer" }), fixtureData(), asOf,
+    );
+    const saved = await JSZip.loadAsync(await out.arrayBuffer());
+    const xml = await saved.file(testPaths.Dashboard)!.async("string");
+    expect(xml).toContain('r="S88"');
+    expect(xml).toContain('r="S89"');
+    expect(xml).toContain('tblObjectives[Comments]');
+    expect(xml).toContain('min="19" max="19" width="50"');
+    expect(xml).toContain('min="20" max="16383"');
+    const listXml = await saved.file(testPaths.Lists)!.async("string");
+    expect(listXml).toContain("Red — Significantly Behind");
+    expect(listXml).toContain("Chairperson");
+  });
+});
+
 describe("Excel import validation", () => {
   it("reads Excel files through FileReader when File.arrayBuffer is unavailable", async () => {
     const file = new File([new Uint8Array(synthetic)], "legacy-browser.xlsx");

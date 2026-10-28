@@ -72,13 +72,33 @@ export const EMPTY_FILTERS: Filters = {
   priority: [],
   year: [],
 };
+/** Church-approved rating descriptions. Numeric ratings and calculations are unchanged. */
 export const RATING_LABELS: Record<number, string> = {
-  1: "Issue Realized",
-  2: "Issue Imminent",
-  3: "Monitor",
-  4: "On Track",
-  5: "Exceeding",
+  1: "Red — Significantly Behind",
+  2: "Amber — Behind Schedule",
+  3: "Yellow — On Schedule",
+  4: "Light Green — Slightly Ahead",
+  5: "Green — Ahead of Schedule",
 };
+export const RATING_PROGRESS_LABELS: Record<number, string> = {
+  1: "Significantly Behind Schedule",
+  2: "Behind schedule",
+  3: "On Schedule",
+  4: "Slightly Ahead of Schedule",
+  5: "Ahead of Schedule",
+};
+export const CHURCH_ROLES = [
+  "Chairperson",
+  "Vice Chairperson",
+  "Team Lead",
+  "Team Member",
+  "Office Staff",
+  "Ministerial Staff",
+  "Vendor",
+  "Community Rep",
+  "Church member",
+  "HR Business Partner",
+];
 export const RATING_COLORS: Record<number, string> = {
   1: "#dc4654",
   2: "#f49a43",
@@ -88,7 +108,7 @@ export const RATING_COLORS: Record<number, string> = {
 };
 export const DEFAULT_LISTS: Lists = {
   ministries: [],
-  roles: [],
+  roles: [...CHURCH_ROLES],
   ratings: [1, 2, 3, 4, 5],
   statuses: ["Not Started", "In Progress", "Completed", "On Hold", "At Risk"],
   priorities: ["Low", "Medium", "High", "Critical"],

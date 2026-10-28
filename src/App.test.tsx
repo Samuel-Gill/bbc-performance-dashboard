@@ -141,6 +141,17 @@ function metric(label: string) {
 }
 
 describe("React UI integration (DOM, not a rendered browser)", () => {
+  it("shows objective comments in Attention required and uses updated status descriptions", async () => {
+    const data = fixtureData();
+    data.objectives[2].comments = "Contact leadership for the overdue recovery plan.";
+    await start();
+    await upload(await buildTestWorkbook(data));
+    nav("Dashboard");
+    expect(screen.getByRole("columnheader", { name: "COMMENTS" })).toBeTruthy();
+    expect(screen.getByText("Contact leadership for the overdue recovery plan.")).toBeTruthy();
+    expect(screen.getAllByText(/Red — Significantly Behind/).length).toBeGreaterThan(0);
+  });
+
   it("keeps upload available under Strict Mode without consulting Web Locks", async () => {
     const request = vi.fn(() => {
       throw new Error("Locks unavailable");

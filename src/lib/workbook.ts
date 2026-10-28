@@ -2,6 +2,8 @@ import JSZip from "jszip";
 import type { DataSet, Goal, Objective, KPI, Update, Lists } from "./domain";
 import {
   DEFAULT_LISTS,
+  CHURCH_ROLES,
+  RATING_LABELS,
   objectiveViews,
   kpiAchievement,
   todayISO,
@@ -633,7 +635,7 @@ export async function importWorkbook(
     ...lists.ministries,
     ...objectives.map((o) => o.ministry),
   ]);
-  lists.roles = unique([...lists.roles, ...objectives.map((o) => o.role)]);
+  lists.roles = unique([...CHURCH_ROLES, ...lists.roles, ...objectives.map((o) => o.role)]);
   for (const key of ["statuses", "priorities", "active", "units"] as const)
     if (!lists[key].length) lists[key] = [...DEFAULT_LISTS[key]];
   lists.statuses = unique([
@@ -880,14 +882,7 @@ function rowsForExport(
         ? Number(o.lastUpdateDate.slice(0, 4))
         : null,
       o.goalName,
-      [
-        "",
-        "🔴 Red — Issue Realized",
-        "🟠 Amber — Issue Eminent",
-        "🟡 Yellow — Monitor",
-        "🟢 Light Green — On Track",
-        "🟩 Green — Exceed Expectations",
-      ][o.rating] || "",
+      RATING_LABELS[o.rating] || "",
     ];
   });
   const kpis = data.kpis.map((k) => {
@@ -943,6 +938,11 @@ function rowsForExport(
 }
 function correctedFormula(table: string, header: string, original: string) {
   const ref = (h: string) => `tblObjectives[[#This Row],[${h}]]`;
+  // Unlike the lookup list, the original Status Description is a CHOOSE
+  // formula containing literal wording. Refresh that *label-only* formula
+  // when exporting, without changing the 1–5 scoring or other calculations.
+  if (table === "tblObjectives" && header === "Status Description")
+    original = `IF(${ref("Status Rating")}="","",CHOOSE(${ref("Status Rating")},${[1, 2, 3, 4, 5].map((n) => JSON.stringify(RATING_LABELS[n])).join(",")}))`;
   if (table === "tblKPI" && header === "KPI Achievement %")
     original =
       'IF(tblKPI[[#This Row],[KPI ID]]="","",IF(OR(tblKPI[[#This Row],[Target]]="",tblKPI[[#This Row],[Actual]]="",tblKPI[[#This Row],[Target]]=0),"",IFERROR(tblKPI[[#This Row],[Actual]]/tblKPI[[#This Row],[Target]],"")))';
@@ -1151,9 +1151,60 @@ async function writeControlledLists(zip: JSZip, path: string, data: DataSet) {
       setCell(doc, row, letter, value, undefined, style);
     }
   }
+  // F is the workbook's rating lookup column, not part of a structured table.
+  // Keep Excel's existing Status Description LOOKUP formulas linked to the
+  // current church-approved descriptions on every downloaded workbook.
+  const header = rowMap.get(3);
+  if (header) setCell(doc, header, "F", "Objective Status Description");
+  for (let rating = 1; rating <= 5; rating++) {
+    let row = rowMap.get(rating + 3);
+    if (!row) {
+      row = doc.createElementNS(NS, "row");
+      row.setAttribute("r", String(rating + 3));
+      sd.appendChild(row);
+      rowMap.set(rating + 3, row);
+    }
+    setCell(doc, row, "F", RATING_LABELS[rating]);
+  }
   extendRanges(doc, Math.max(...Object.values(lengths)));
   zip.file(path, serializer.serializeToString(doc));
   return lengths;
+}
+
+/** Add a Comments lookup to older Excel dashboard templates without moving any
+ * of the original 1,048,576 dashboard rows or existing formulas/charts.
+ * The workbook's original sheet1.xml is ~52 MB, so do NOT DOM-parse it.
+ */
+async function ensureDashboardComments(zip: JSZip, path: string) {
+  const source = await zip.file(path)?.async("string");
+  if (!source) throw new Error("Missing Excel Dashboard sheet.");
+  const rowsNeeded = new Set(Array.from({ length: 11 }, (_, i) => String(i + 88)));
+  const headerStyle = /<c\s+r="O88"\s+s="(\d+)"/.exec(source)?.[1];
+  const bodyStyle = /<c\s+r="O89"\s+s="(\d+)"/.exec(source)?.[1];
+  const changed = source.replace(
+    /<row\b[^>]*\br="(8[89]|9[0-8])"[^>]*>[\s\S]*?<\/row>/g,
+    (row, rowNumber: string) => {
+      rowsNeeded.delete(rowNumber);
+      if (new RegExp(`<c\\s[^>]*\\br="S${rowNumber}"`).test(row)) return row;
+      const cell = rowNumber === "88"
+        ? `<c r="S88"${headerStyle ? ` s="${headerStyle}"` : ""} t="inlineStr"><is><t>Comments</t></is></c>`
+        : `<c r="S${rowNumber}"${bodyStyle ? ` s="${bodyStyle}"` : ""} t="str"><f>IF($B${rowNumber}="","",IFERROR(INDEX(tblObjectives[Comments],MATCH($B${rowNumber},tblObjectives[Objective ID],0)),""))</f><v/></c>`;
+      return row.replace("</row>", cell + "</row>");
+    },
+  );
+  // Minimal synthetic test workbooks have no Excel dashboard table.
+  if (rowsNeeded.size === 11) return;
+  if (rowsNeeded.size)
+    throw new Error("Excel Dashboard exception rows 88–98 are incomplete. Check the uploaded template.");
+  // The original dashboard hides column S and everything to its right.
+  // Expose only S for readable comments, keeping T onward hidden.
+  const visible = changed.replace(
+    /<col min="19" max="16383" width="0" hidden="1" customWidth="1"\s*\/>/,
+    '<col min="19" max="19" width="50" customWidth="1"/>' +
+      '<col min="20" max="16383" width="0" hidden="1" customWidth="1"/>',
+  );
+  // A new column extends the dashboard to S; all original formula cells remain.
+  zip.file(path, visible.replace(/(<dimension\s+ref="[A-Z]+\d+:)R(\d+")/, "$1S$2"));
 }
 
 export async function exportWorkbook(
@@ -1256,6 +1307,9 @@ export async function exportWorkbook(
     }
   }
   const listLengths = await writeControlledLists(zip, paths.Lists, data);
+  // The React dashboard already shows comments. Add matching Excel formulas to
+  // older templates too, so users get them after the next export/reopen.
+  await ensureDashboardComments(zip, paths.Dashboard);
   const meta = await zip.file("xl/workbook.xml")?.async("string");
   if (meta) {
     const doc = xmlParse(meta);
