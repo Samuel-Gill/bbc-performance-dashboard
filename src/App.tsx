@@ -122,6 +122,22 @@ const STATUS_COLORS: Record<string, string> = {
   "On Hold": "#a66a1f",
   "Not Started": "#8293ab",
 };
+// Native select options cannot reliably render custom HTML swatches, so use
+// recognizable colored symbols in the menu and an exact-color CSS swatch in
+// the collapsed control. Keep the underlying value a plain numeric rating.
+const RATING_OPTION_SYMBOLS: Record<number, string> = {
+  1: "🔴",
+  2: "🟠",
+  3: "🟡",
+  4: "🟢",
+  5: "🟩",
+};
+const ratingOptionLabel = (value: string) => {
+  const rating = Number(value);
+  return RATING_PROGRESS_LABELS[rating]
+    ? `${RATING_OPTION_SYMBOLS[rating]} ${rating} · ${RATING_PROGRESS_LABELS[rating]}`
+    : value;
+};
 const fmt = (v: number | null | undefined) => formatPercent(v, 1);
 const initial = (
   kind: Kind,
@@ -509,20 +525,27 @@ function Editor({
         {required && <i aria-hidden="true">*</i>}
       </span>
       {options && !["ministry", "role"].includes(key) ? (
-        <select
-          required={required}
-          value={form[key] || ""}
-          onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-        >
-          <option value="">Choose...</option>
-          {uniq([...options, form[key] || ""]).map((opt) => (
-            <option key={opt} value={opt}>
-              {key === "rating"
-                ? `${opt} · ${RATING_LABELS[Number(opt)]} — ${RATING_PROGRESS_LABELS[Number(opt)]}`
-                : opt}
-            </option>
-          ))}
-        </select>
+        <div className={key === "rating" ? "rating-select-wrap" : undefined}>
+          <select
+            required={required}
+            value={form[key] || ""}
+            onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+          >
+            <option value="">Choose...</option>
+            {uniq([...options, form[key] || ""]).map((opt) => (
+              <option key={opt} value={opt}>
+                {key === "rating" ? ratingOptionLabel(opt) : opt}
+              </option>
+            ))}
+          </select>
+          {key === "rating" && RATING_COLORS[Number(form[key])] && (
+            <span
+              className="rating-current-dot"
+              aria-hidden="true"
+              style={{ backgroundColor: RATING_COLORS[Number(form[key])] }}
+            />
+          )}
+        </div>
       ) : key === "description" || key === "comments" || key === "comment" ? (
         <textarea
           rows={key === "description" ? 3 : 2}

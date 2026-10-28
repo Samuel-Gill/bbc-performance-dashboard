@@ -3417,3 +3417,26 @@ input:focus-visible {
   line-height: 1.5;
   color: #292f3b;
 }
+
+/* Rating selector: one description per option, with a real-color selection swatch.
+   Colored symbols inside the native menu also work on browsers that ignore
+   custom styles on <option> elements (notably macOS/Safari). */
+.rating-select-wrap {
+  position: relative;
+  width: 100%;
+}
+.rating-select-wrap select {
+  padding-right: 55px;
+}
+.form-field .rating-current-dot {
+  position: absolute;
+  right: 34px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 13px;
+  height: 13px;
+  border: 1px solid rgb(0 0 0 / 15%);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #fff;
+  pointer-events: none;
+}

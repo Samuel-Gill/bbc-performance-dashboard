@@ -141,6 +141,35 @@ function metric(label: string) {
 }
 
 describe("React UI integration (DOM, not a rendered browser)", () => {
+  it("uses color markers and a single schedule description for all rating choices", async () => {
+    await start();
+    await upload();
+    const expected = [
+      "🔴 1 · Significantly Behind Schedule",
+      "🟠 2 · Behind schedule",
+      "🟡 3 · On Schedule",
+      "🟢 4 · Slightly Ahead of Schedule",
+      "🟩 5 · Ahead of Schedule",
+    ];
+    for (const [page, addButton] of [
+      ["Objectives", /Add objective/i],
+      ["Updates", /Add update/i],
+    ] as const) {
+      nav(page);
+      fireEvent.click(screen.getByRole("button", { name: addButton }));
+      const dialog = within(screen.getByRole("dialog"));
+      const select = dialog.getByRole("combobox", { name: /Status rating/i }) as HTMLSelectElement;
+      const options = within(select).getAllByRole("option") as HTMLOptionElement[];
+      expect(options.slice(1).map((o) => o.textContent)).toEqual(expected);
+      expect(options.slice(1).map((o) => o.value)).toEqual(["1", "2", "3", "4", "5"]);
+      fireEvent.change(select, { target: { value: "2" } });
+      expect(select.value).toBe("2");
+      const swatch = select.parentElement?.querySelector<HTMLElement>(".rating-current-dot");
+      expect(swatch?.getAttribute("aria-hidden")).toBe("true");
+      expect(swatch?.style.backgroundColor).toBe("rgb(244, 154, 67)");
+      fireEvent.click(dialog.getByRole("button", { name: "Cancel" }));
+    }
+  });
   it("shows objective comments in Attention required and uses updated status descriptions", async () => {
     const data = fixtureData();
     data.objectives[2].comments = "Contact leadership for the overdue recovery plan.";
