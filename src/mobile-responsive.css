@@ -1,0 +1,308 @@
+/*
+ * Phone/tablet layout fixes for BBC Perfomance Dashboard.
+ * Loaded AFTER styles.css; deliberately presentation-only. Keep Excel,
+ * calculation, filter and record-management logic in their existing modules.
+ */
+@media (max-width: 850px) {
+  /* Prevent flex/grid children from forcing the entire page wider than the
+     visual viewport. Wide data tables scroll in their own containers below. */
+  .app-frame,
+  .main,
+  .content,
+  .page-stack,
+  .chart-grid,
+  .chart-card,
+  .table-card,
+  .filter-panel {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* On iPhone/Safari, the original single-row toolbar placed the date, Today,
+     and Export button beyond the right edge. Give actions real grid tracks. */
+  .topbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto;
+    align-items: center;
+    gap: 10px 12px;
+    height: auto;
+    min-height: 0;
+    padding: 12px 16px;
+  }
+  .top-left {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    padding: 0;
+    min-width: 0;
+  }
+  .top-actions {
+    display: contents;
+  }
+  .topbar .global-search {
+    display: none;
+  }
+  .topbar .download-button {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    align-self: center;
+    min-width: 0;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+  .topbar .reporting-control {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex;
+    align-items: end;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+  }
+  .topbar .reporting-control label,
+  .topbar .reporting-control input {
+    min-width: 0;
+  }
+  .topbar .reporting-control input {
+    width: 145px;
+    max-width: 100%;
+    font-size: 16px;
+  }
+  .topbar .upload-button {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-self: end;
+  }
+
+  .content {
+    padding-inline: 16px;
+  }
+  .page-intro,
+  .report-bar,
+  .section-head {
+    min-width: 0;
+  }
+  .page-intro > div,
+  .section-head > div {
+    min-width: 0;
+  }
+
+  /* Keep one chart per row; let the doughnut and all five long rating labels
+     stack naturally instead of competing for a fixed horizontal width. */
+  .chart-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .chart-card {
+    overflow: hidden;
+  }
+  .chart-content {
+    min-width: 0;
+    width: 100%;
+  }
+  .rating-chart {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 100%;
+    min-height: 0;
+    gap: 18px;
+  }
+  .donut-holder {
+    width: 220px;
+    max-width: 100%;
+    height: 220px;
+    flex: 0 0 auto;
+  }
+  .rating-legend {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    align-self: stretch;
+    gap: 12px;
+  }
+  .rating-legend > div {
+    display: flex;
+    align-items: flex-start;
+    min-width: 0;
+    gap: 10px;
+    line-height: 1.45;
+  }
+  .rating-legend .legend-circle {
+    flex: 0 0 11px;
+    width: 11px;
+    height: 11px;
+    margin-top: 5px;
+  }
+  .rating-legend .rating-legend-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+  .rating-legend > div > strong {
+    flex-shrink: 0;
+  }
+
+  /* Filters must not open off-screen. Text can wrap, with scrolling INSIDE
+     the open menu, not across the whole app. */
+  .filter-wrap {
+    min-width: 0;
+  }
+  .filter-popover {
+    min-width: 0;
+    width: min(320px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+  }
+  .filter-options {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .filter-option-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* A large records table must scroll on its own, not squeeze all columns or
+     cause the Safari page/toolbar to move horizontally. */
+  .table-scroll {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .table-scroll > table {
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .metric-grid,
+  .metric-grid > .metric,
+  .goal-grid,
+  .navigation-grid {
+    min-width: 0;
+  }
+  .metric-grid > .metric {
+    overflow-wrap: anywhere;
+  }
+
+  /* Dialogs/editor forms need room for the keyboard and the iOS safe area. */
+  .overlay {
+    padding: 12px;
+  }
+  .dialog {
+    min-width: 0;
+    width: 100%;
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
+    overscroll-behavior: contain;
+  }
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    min-width: 0;
+    font-size: 16px; /* Avoid Safari's automatic focus zoom. */
+  }
+  .toast {
+    max-width: calc(100vw - 24px);
+  }
+}
+
+@media (min-width: 601px) and (max-width: 850px) {
+  /* Three filter columns at tablet widths: anchor the last menu to its right. */
+  .filter-wrap:nth-child(3n) .filter-popover {
+    left: auto;
+    right: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .topbar {
+    grid-template-rows: auto auto;
+    padding: 12px 14px;
+  }
+  .content {
+    padding-inline: 12px;
+  }
+  .topbar .download-button {
+    font-size: 13px;
+    padding: 9px 12px;
+    min-height: 42px;
+  }
+  .filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .filter-wrap:nth-child(2n) .filter-popover {
+    left: auto;
+    right: 0;
+  }
+  .chart-card {
+    padding: 20px 15px;
+  }
+  .chart-heading h3,
+  .chart-heading p {
+    overflow-wrap: anywhere;
+  }
+  .chart-content {
+    height: 285px;
+  }
+  .rating-chart {
+    gap: 14px;
+  }
+  .donut-holder {
+    width: 205px;
+    height: 205px;
+  }
+  .rating-legend > div {
+    font-size: 14px;
+  }
+  .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .metric {
+    min-width: 0;
+  }
+  .metric-value {
+    font-size: clamp(23px, 6vw, 29px);
+  }
+  .overlay {
+    padding: 8px;
+  }
+  .dialog {
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+  }
+  .dialog-actions {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 380px) {
+  /* Two columns make long filter names unreadable on 320–375px phones. */
+  .filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .filter-wrap .filter-popover,
+  .filter-wrap:nth-child(2n) .filter-popover {
+    left: 0;
+    right: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+  .topbar .reporting-control {
+    gap: 6px;
+  }
+  .topbar .download-button {
+    padding-inline: 10px;
+  }
+  .chart-card {
+    padding-inline: 12px;
+  }
+}
