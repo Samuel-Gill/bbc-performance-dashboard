@@ -1125,11 +1125,6 @@ function Welcome({
           </div>
         </div>
       </section>
-      <nav className="overview-path" aria-label="Church planning and reporting journey">
-        {(["Vision / Mission", "Strategy", "Goals", "Objectives", "KPIs", "Report"] as const).map((step, index) => (
-          <span key={step}>{index > 0 && <ChevronRight size={15} aria-hidden="true" />}{step}</span>
-        ))}
-      </nav>
       <section
         className={"workspace-strip " + (hasWorkspace ? "loaded" : "")}
         aria-label="Workspace status"
@@ -1961,6 +1956,16 @@ export default function App() {
                 {page.toUpperCase()}
               </div>
               <h1>{page}</h1>
+              {page === "Overview" && (
+                <nav className="overview-path" aria-label="Church planning and reporting journey">
+                  {(["Vision / Mission", "Strategy", "Goals", "Objectives", "KPIs", "Report"] as const).map((step, index) => (
+                    <span key={step}>
+                      {index > 0 && <ChevronRight size={15} aria-hidden="true" />}
+                      {step}
+                    </span>
+                  ))}
+                </nav>
+              )}
               <p>{thisPageDesc[page]}</p>
             </div>
             <div className="page-intro-right">
