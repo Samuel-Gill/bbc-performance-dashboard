@@ -2688,6 +2688,36 @@ td.two-line span {
 .welcome-counts .metric-sub {
   font-size: 12px;
 }
+/* Keep the live goal list inside the summary card without stretching the grid. */
+.welcome-goal-list {
+  list-style: none;
+  margin: 9px 0 0;
+  padding: 0;
+  max-height: 105px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+.welcome-goal-list li {
+  display: flex;
+  gap: 7px;
+  align-items: baseline;
+  padding: 2px 0;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #384a62;
+}
+.welcome-goal-id {
+  flex: none;
+  font-weight: 750;
+  color: #5c277b;
+}
+.welcome-goal-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .welcome-middle {
   display: grid;
   grid-template-columns: 1fr 1.05fr;
