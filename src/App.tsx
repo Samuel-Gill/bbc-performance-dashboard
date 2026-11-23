@@ -1087,37 +1087,15 @@ function Welcome({
             </button>
           </div>
         </div>
-        <div className="welcome-art" aria-hidden="true">
-          <div className="church-arch">
-            <svg viewBox="0 0 200 240">
-              <path
-                d="M100 38v45m-18-27h36"
-                stroke="currentColor"
-                strokeWidth="8"
-                strokeLinecap="round"
-              />
-              <path
-                d="M39 211v-91l61-45 61 45v91H39Z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="5"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M84 211v-43a16 16 0 0 1 32 0v43M61 135v22m78-22v22"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="5"
-                strokeLinecap="round"
-              />
-              <path
-                d="M21 215h158"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
+        <div className="welcome-art">
+          <img
+            src="/bbc-church-logo.png"
+            alt="Bethlehem Baptist Church logo"
+            className="church-logo"
+            width={220}
+            height={220}
+            style={{ width: "min(220px, 100%)", height: "auto", display: "block" }}
+          />
           <div className="art-caption">
             Growing together,
             <br />
