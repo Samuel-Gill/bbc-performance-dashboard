@@ -1,0 +1,72 @@
+/* Scoped enhancements from the church's nine-slide review. Import last. */
+.dashboard-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.dashboard-metrics .metric {
+  min-width: 0;
+  min-height: 102px;
+  padding: 13px 16px;
+  display: grid;
+  align-content: space-between;
+}
+.dashboard-metrics .metric-top { gap: 6px; line-height: 1.25; font-size: 13px; }
+.dashboard-metrics .metric-icon { width: 29px; height: 29px; flex: 0 0 29px; }
+.dashboard-metrics .metric-value { font-size: clamp(22px, 2.25vw, 28px); margin: 4px 0 2px; line-height: 1.15; }
+.dashboard-metrics .metric-sub { font-size: 12px; line-height: 1.35; }
+
+.dashboard-metrics .metric-details { margin-top: 5px; position: relative; font-size: 11px; }
+.dashboard-metrics .metric-details summary { color: #5d267f; cursor: pointer; font-weight: 700; }
+.dashboard-metrics .metric-details ul { margin: 6px 0 0; padding-left: 17px; font-size: 12px; line-height: 1.6; color: #34243b; }
+.overview-path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 20px;
+  color: #321847;
+  font-size: 13px;
+  font-weight: 700;
+}
+.overview-path > span { display: inline-flex; align-items: center; gap: 7px; }
+.overview-path svg { color: #7f6d88; }
+.glossary-nav-item { padding-left: 14px; font-size: 0.96em; }
+.glossary-page .glossary-intro { margin-bottom: 0; }
+.glossary-page .glossary-intro h2 { color: #291437; font-size: 22px; }
+.glossary-page .glossary-intro p { color: #51435c; font-size: 15px; line-height: 1.6; margin-top: 7px; }
+.glossary-section { padding: 21px 24px; }
+.glossary-section h3 { margin: 0 0 12px; color: #321847; font-size: 18px; }
+.glossary-section dl { margin: 0; }
+.glossary-entry { display: grid; grid-template-columns: minmax(140px, 0.3fr) minmax(0, 1fr); gap: 14px; border-top: 1px solid #e9e4ec; padding: 14px 0; }
+.glossary-entry dt { font-size: 14px; font-weight: 750; color: #321847; }
+.glossary-entry dd { margin: 0; font-size: 14px; line-height: 1.6; color: #45354f; }
+.glossary-rating-list { display: grid; gap: 11px; }
+.glossary-rating-list > div { display: flex; gap: 10px; align-items: center; color: #2e2236; font-size: 14px; }
+.glossary-rating-dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; flex: 0 0 14px; }
+.glossary-footnote { margin: 14px 0 0; color: #54465d; font-size: 14px; }
+.ministry-export-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 11px 16px; font-size: 14px; color: #321847; }
+.ministry-report-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ministry-report-actions select { min-width: 170px; max-width: 240px; width: 100%; border: 1px solid #cfd7e2; border-radius: 8px; padding: 9px 10px; background: #fff; color: #2e2438; font: inherit; font-size: 14px; }
+.ministry-pdf-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 38px; padding: 8px 12px; white-space: nowrap; font-size: 14px; }
+.ministry-pdf-button:disabled { opacity: 0.55; cursor: not-allowed; }
+.glossary-page, .ministry-report-actions { min-width: 0; }
+
+@media (max-width: 1320px) { .dashboard-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 920px) { .dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .dashboard-metrics .metric { padding: 11px 12px; min-height: 104px; }
+  .dashboard-metrics .metric-value { font-size: 22px; }
+  .dashboard-metrics .metric-top { font-size: 12px; }
+  .dashboard-metrics .metric-sub { font-size: 11px; }
+  .glossary-entry { grid-template-columns: 1fr; gap: 5px; }
+  .glossary-section { padding: 16px; }
+  .ministry-report-actions { width: 100%; }
+  .ministry-report-actions label, .ministry-report-actions select { flex: 1; min-width: 0; max-width: none; }
+  .ministry-pdf-button { width: auto; flex: 0 0 auto; }
+}
+@media (max-width: 350px) {
+  .dashboard-metrics { grid-template-columns: minmax(0, 1fr); }
+  .ministry-report-actions { flex-direction: column; align-items: stretch; }
+  .ministry-pdf-button { width: 100%; }
+}

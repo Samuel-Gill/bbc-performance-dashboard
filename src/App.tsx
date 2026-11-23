@@ -18,6 +18,8 @@ import {
   CloudUpload,
   Download,
   FileSpreadsheet,
+  BookOpenText,
+  FileDown,
   Filter,
   Goal as GoalIcon,
   LayoutDashboard,
@@ -85,6 +87,9 @@ import {
 } from "./lib/domain";
 import { saveRecordData, deleteRecordData } from "./lib/records";
 import { calculatedFieldPreview } from "./lib/calculated-preview";
+import Glossary from "./Glossary";
+import { downloadMinistryReportPdf } from "./lib/ministry-report";
+import "./insights-enhancements.css";
 import {
   clearWorkspace,
   downloadBlob,
@@ -103,6 +108,7 @@ type Page =
   | "KPI Tracking"
   | "Updates"
   | "Insights"
+  | "Glossary"
   | "Data Quality"
   | "Workbook";
 type Kind = "goal" | "objective" | "kpi" | "update";
@@ -115,15 +121,11 @@ const LINKS: { name: Page; icon: typeof LayoutDashboard }[] = [
   { name: "KPI Tracking", icon: Activity },
   { name: "Updates", icon: Clock3 },
   { name: "Insights", icon: BarChart3 },
+  { name: "Glossary", icon: BookOpenText },
   { name: "Data Quality", icon: ShieldCheck },
   { name: "Workbook", icon: FileSpreadsheet },
 ];
-const STATUS_COLORS: Record<string, string> = Object.fromEntries(
-  [1, 2, 3, 4, 5].map((rating) => [
-    RATING_PROGRESS_LABELS[rating],
-    RATING_COLORS[rating],
-  ]),
-);
+
 // Native select options cannot reliably render custom HTML swatches, so use
 // recognizable colored symbols in the menu and an exact-color CSS swatch in
 // the collapsed control. Keep the underlying value a plain numeric rating.
@@ -141,6 +143,8 @@ const ratingOptionLabel = (value: string) => {
     : value;
 };
 const fmt = (v: number | null | undefined) => formatPercent(v, 1);
+/** Label only: keep the original percentage-point calculation unchanged. */
+const displayVariance = (value: number | null) => formatDelta(value).replace(/\s*pp$/, "");
 const initial = (
   kind: Kind,
   record?: Goal | Objective | KPI | Update,
@@ -314,12 +318,14 @@ function Metric({
   icon: Icon,
   sub,
   tone = "blue",
+  details,
 }: {
   label: string;
   value: string | number;
   icon: typeof Target;
   sub: string;
   tone?: string;
+  details?: ReactNode;
 }) {
   return (
     <div className="metric">
@@ -331,6 +337,7 @@ function Metric({
       </div>
       <div className="metric-value">{value}</div>
       <div className="metric-sub">{sub}</div>
+      {details}
     </div>
   );
 }
@@ -876,7 +883,7 @@ function ObjectiveDetail({
     ["Objective progress", RATING_PROGRESS_LABELS[row.rating] || "Unknown"],
     ["Actual completion", fmt(row.actual)],
     ["Planned completion", fmt(row.planned)],
-    ["Variance", formatDelta(row.variance)],
+    ["Variance (percentage points)", displayVariance(row.variance)],
     ["Days remaining", row.daysRemaining === null ? "—" : row.daysRemaining],
     ["Overdue", row.overdue ? "Yes" : "No"],
     ["KPI achievement", fmt(row.achievement)],
@@ -929,7 +936,7 @@ function ObjectiveDetail({
             <div>
               <span>Variance</span>
               <strong className={colorVariance(row.variance)}>
-                {formatDelta(row.variance)}
+                {displayVariance(row.variance)}
               </strong>
             </div>
             <div>
@@ -1118,6 +1125,11 @@ function Welcome({
           </div>
         </div>
       </section>
+      <nav className="overview-path" aria-label="Church planning and reporting journey">
+        {(["Vision / Mission", "Strategy", "Goals", "Objectives", "KPIs", "Report"] as const).map((step, index) => (
+          <span key={step}>{index > 0 && <ChevronRight size={15} aria-hidden="true" />}{step}</span>
+        ))}
+      </nav>
       <section
         className={"workspace-strip " + (hasWorkspace ? "loaded" : "")}
         aria-label="Workspace status"
@@ -1178,7 +1190,7 @@ function Welcome({
       <div className="welcome-middle">
         <Card className="snapshot-card">
           <SectionHead
-            title="Current performance"
+            title="Current Objective Performance"
             description={`All objectives · Reporting date ${reportingDate}`}
           />
           <div className="snapshot-main">
@@ -1190,7 +1202,7 @@ function Welcome({
               <span>Planned progress</span>
               <strong>{fmt(snapshot.planned)}</strong>
               <small className={colorVariance(snapshot.variance)}>
-                {formatDelta(snapshot.variance)} variance
+                {displayVariance(snapshot.variance)} variance
               </small>
             </div>
           </div>
@@ -1311,6 +1323,7 @@ export default function App() {
   dataRef.current = data;
   // Upload/edit availability must not depend on a lifetime Web Lock.
   const canEdit = true;
+  const [reportMinistry, setReportMinistry] = useState("");
   const [starterPassword, setStarterPassword] = useState("");
   const [starterMessage, setStarterMessage] = useState("");
   const loadIncludedWorkbook = async (password = "") => {
@@ -1756,6 +1769,18 @@ export default function App() {
     plannedP: s.planned === null ? null : Number((s.planned * 100).toFixed(2)),
   }));
   const ministrySummaries = summarizeBy(filtered, (o) => o.ministry);
+  const ministryNamesForReport = uniq(filtered.map((o) => o.ministry));
+  const reportSelection = filters.ministry.length === 1
+    ? filters.ministry[0]
+    : reportMinistry;
+  const canDownloadMinistryReport = ministryNamesForReport.includes(reportSelection);
+  const exportMinistryPdf = (name: string) =>
+    downloadMinistryReportPdf({
+      ministry: name,
+      reportingDate: today,
+      objectives: filtered,
+      kpis: scopedKpis,
+    });
   const ratings = [1, 2, 3, 4, 5].map((n) => ({
     name: `${n} · ${RATING_PROGRESS_LABELS[n]}`,
     rating: n,
@@ -1783,6 +1808,7 @@ export default function App() {
       "Measure targets, actuals and outcomes for every objective.",
     Updates: "Historical progress entries and the latest delivery changes.",
     Insights: "Compare strategic goals, ministries and performance drivers.",
+    Glossary: "Definitions and calculation rules for church performance reporting.",
     "Data Quality":
       "Find missing information, invalid references and reporting risks.",
     Workbook: "Import and export your full Excel performance model.",
@@ -1804,7 +1830,7 @@ export default function App() {
         </div>
         <div className="side-label">WORKSPACE</div>
         <nav aria-label="Main navigation">
-          {LINKS.slice(0, 7).map(({ name, icon: Icon }) => (
+          {LINKS.filter((entry) => entry.name !== "Data Quality" && entry.name !== "Workbook").map(({ name, icon: Icon }) => (
             <button
               key={name}
               aria-current={page === name ? "page" : undefined}
@@ -1812,14 +1838,13 @@ export default function App() {
               onClick={() => go(name)}
             >
               <Icon size={19} />
-              <span>{name}</span>
-              {name === "Data Quality" && <small>!</small>}
+              <span className={name === "Glossary" ? "glossary-nav-item" : ""}>{name}</span>
             </button>
           ))}
         </nav>
         <div className="side-label section-second">MANAGE</div>
         <nav aria-label="Workspace tools">
-          {LINKS.slice(7).map(({ name, icon: Icon }) => (
+          {LINKS.filter((entry) => entry.name === "Data Quality" || entry.name === "Workbook").map(({ name, icon: Icon }) => (
             <button
               key={name}
               aria-current={page === name ? "page" : undefined}
@@ -1871,7 +1896,7 @@ export default function App() {
             </div>
           </div>
           <div className="top-actions">
-            {page !== "Overview" && page !== "Workbook" && (
+            {page !== "Overview" && page !== "Workbook" && page !== "Glossary" && (
               <label className="global-search">
                 <Search size={15} />
                 <input
@@ -1952,7 +1977,7 @@ export default function App() {
               </div>
             </div>
           </div>
-          {page !== "Overview" && page !== "Workbook" && (
+          {page !== "Overview" && page !== "Workbook" && page !== "Glossary" && (
             <label className="mobile-search">
               <Search size={15} />
               <input
@@ -1965,6 +1990,7 @@ export default function App() {
           )}
           {page !== "Workbook" &&
             page !== "Overview" &&
+            page !== "Glossary" &&
             page !== "Data Quality" && (
               <Card className="filter-panel">
                 <div className="filter-heading">
@@ -2063,14 +2089,35 @@ export default function App() {
               )}
             </>
           )}
+          {page === "Glossary" && <Glossary />}
           {page === "Dashboard" && (
             <div className="page-stack">
-              <div className="metric-grid">
+              {filters.ministry.length === 1 && filtered.length > 0 && (
+                <div className="ministry-export-toolbar surface">
+                  <span><strong>Ministry selected:</strong> {filters.ministry[0]}</span>
+                  <button
+                    className="secondary ministry-pdf-button"
+                    onClick={() => exportMinistryPdf(filters.ministry[0])}
+                    aria-label={`Download ${filters.ministry[0]} ministry report as PDF`}
+                  >
+                    <FileDown size={17} aria-hidden="true" /> Download ministry PDF
+                  </button>
+                </div>
+              )}
+              <div className="metric-grid dashboard-metrics">
                 <Metric
                   icon={GoalIcon}
-                  label="Goals represented"
+                  label="Strategic goals represented"
                   value={overview.goals}
                   sub="Goals with matching objectives"
+                  details={
+                    <details className="metric-details">
+                      <summary>View goal names</summary>
+                      <ul>{data.goals.filter((g) => filtered.some((o) => o.goalId === g.id)).map((g) => (
+                        <li key={g.id}>{g.id} · {g.title}</li>
+                      ))}</ul>
+                    </details>
+                  }
                   tone="blue"
                 />
                 <Metric
@@ -2101,8 +2148,8 @@ export default function App() {
                       : ArrowUpRight
                   }
                   label="Progress variance"
-                  value={formatDelta(overview.variance)}
-                  sub="Actual minus planned"
+                  value={displayVariance(overview.variance)}
+                  sub="Actual minus planned (percentage points)"
                   tone={
                     overview.variance !== null && overview.variance < -0.15
                       ? "red"
@@ -2341,7 +2388,7 @@ export default function App() {
                   empty={
                     !trend.some((t) => t.actual !== null || t.kpi !== null)
                   }
-                  title="12-month performance trend"
+                  title="12 Month Objective Performance Trend"
                   sub="Monthly update averages, including the reporting month; gaps mean no observations"
                 >
                   <div className="chart-content">
@@ -2411,7 +2458,7 @@ export default function App() {
                       <tr>
                         <th>OBJECTIVE</th>
                         <th>MINISTRY</th>
-                        <th>RATING</th>
+                        <th title="Assigned rating (1–5), not calculated from actual completion">SCHEDULE STATUS</th>
                         <th>VARIANCE</th>
                         <th>KPI</th>
                         <th>ISSUE</th>
@@ -2437,7 +2484,7 @@ export default function App() {
                           </td>
                           <td>
                             <span className={colorVariance(o.variance)}>
-                              {formatDelta(o.variance)}
+                              {displayVariance(o.variance)}
                             </span>
                           </td>
                           <td>{fmt(o.achievement)}</td>
@@ -2606,7 +2653,7 @@ export default function App() {
                             <th>GOAL / MINISTRY</th>
                             <th>PROGRESS</th>
                             <th>VARIANCE</th>
-                            <th>OBJECTIVE STATUS RATING</th>
+                            <th>SCHEDULE STATUS</th>
                             <th>PRIORITY</th>
                             <th>END DATE</th>
                             <th>ATTENTION</th>
@@ -2637,7 +2684,7 @@ export default function App() {
                               </td>
                               <td>
                                 <span className={colorVariance(o.variance)}>
-                                  {formatDelta(o.variance)}
+                                  {displayVariance(o.variance)}
                                 </span>
                               </td>
                               <td>
@@ -2712,7 +2759,7 @@ export default function App() {
                       </strong>
                     </div>
                     <div>
-                      <span>Below target</span>
+                      <span>KPIs Below Target</span>
                       <strong>
                         {
                           rows.filter(
@@ -2734,10 +2781,10 @@ export default function App() {
                             <th>KPI ID</th>
                             <th>MEASURE</th>
                             <th>OBJECTIVE</th>
-                            <th>TARGET</th>
-                            <th>ACTUAL</th>
+                            <th>TARGET COMPLETION</th>
+                            <th>ACTUAL COMPLETION</th>
                             <th>ACHIEVEMENT</th>
-                            <th>STATUS</th>
+                            <th title="Whether the actual KPI result reached the target">KPI TARGET STATUS</th>
                             <th>MEASURED</th>
                             <th></th>
                           </tr>
@@ -2833,7 +2880,7 @@ export default function App() {
                             <th>OBJECTIVE</th>
                             <th>UPDATE DATE</th>
                             <th>COMPLETION</th>
-                            <th>RATING</th>
+                            <th title="Assigned rating (1–5), not calculated from actual completion">SCHEDULE STATUS</th>
                             <th>KPI ACHIEVEMENT</th>
                             <th>COMMENT</th>
                             <th></th>
@@ -2900,8 +2947,8 @@ export default function App() {
                       <tr>
                         <th>STRATEGIC GOAL</th>
                         <th>OBJECTIVES</th>
-                        <th>PLANNED</th>
-                        <th>ACTUAL</th>
+                        <th>PLANNED COMPLETION</th>
+                        <th>ACTUAL COMPLETION</th>
                         <th>VARIANCE</th>
                         <th>ON TRACK</th>
                         <th>AT RISK</th>
@@ -2923,7 +2970,7 @@ export default function App() {
                             <Progress value={s.actual} />
                           </td>
                           <td className={colorVariance(s.variance)}>
-                            {formatDelta(s.variance)}
+                            {displayVariance(s.variance)}
                           </td>
                           <td className="good">{s.onTrack}</td>
                           <td className="bad">{s.atRisk}</td>
@@ -2939,7 +2986,32 @@ export default function App() {
               <Card className="table-card">
                 <SectionHead
                   title="Ministry scorecard"
-                  description="Team-level progress and areas that need intervention."
+                  description="Team-level progress and areas that need intervention. Download a PDF for a single selected ministry."
+                  action={
+                    <div className="ministry-report-actions">
+                      <label>
+                        <span className="sr-only">Ministry for PDF report</span>
+                        <select
+                          aria-label="Ministry for PDF report"
+                          value={canDownloadMinistryReport ? reportSelection : ""}
+                          onChange={(event) => setReportMinistry(event.target.value)}
+                        >
+                          <option value="">Choose ministry…</option>
+                          {ministryNamesForReport.map((name) => (
+                            <option key={name} value={name}>{name}</option>
+                          ))}
+                        </select>
+                      </label>
+                      <button
+                        className="secondary ministry-pdf-button"
+                        disabled={!canDownloadMinistryReport}
+                        title={canDownloadMinistryReport ? `Download ${reportSelection} performance report as PDF` : "Choose a ministry first"}
+                        onClick={() => exportMinistryPdf(reportSelection)}
+                      >
+                        <FileDown size={17} aria-hidden="true" /> Download PDF
+                      </button>
+                    </div>
+                  }
                 />
                 <div className="table-scroll">
                   <table>
@@ -2948,9 +3020,9 @@ export default function App() {
                         <th>MINISTRY</th>
                         <th>GOALS</th>
                         <th>OBJECTIVES</th>
-                        <th>AVG RATING</th>
-                        <th>PLANNED</th>
-                        <th>ACTUAL</th>
+                        <th>AVG OBJ STATUS RATING</th>
+                        <th>PLANNED COMPLETION</th>
+                        <th>ACTUAL COMPLETION</th>
                         <th>VARIANCE</th>
                         <th>OVERDUE</th>
                         <th>KPI</th>
@@ -2970,7 +3042,7 @@ export default function App() {
                             <Progress value={s.actual} />
                           </td>
                           <td className={colorVariance(s.variance)}>
-                            {formatDelta(s.variance)}
+                            {displayVariance(s.variance)}
                           </td>
                           <td className={s.overdue ? "bad" : ""}>
                             {s.overdue}
@@ -2986,14 +3058,18 @@ export default function App() {
               <div className="chart-grid">
                 <ChartBox
                   empty={!filtered.length}
-                  title="Completion by priority"
-                  sub="Progress by business priority"
+                  title="Objective Completion by Priority"
+                  sub="Planned versus actual completion by objective priority"
                 >
                   <div className="chart-content">
                     <ResponsiveContainer height="100%" width="100%">
                       <BarChart
                         data={summarizeBy(filtered, (o) => o.priority).map(
-                          (x) => ({ ...x, value: Math.round(x.actual * 100) }),
+                          (x) => ({
+                            ...x,
+                            plannedP: withPercent(x.planned),
+                            actualP: withPercent(x.actual),
+                          }),
                         )}
                       >
                         <CartesianGrid vertical={false} stroke="#edf1f5" />
@@ -3008,13 +3084,9 @@ export default function App() {
                           axisLine={false}
                         />
                         <Tooltip contentStyle={tooltipStyle} />
-                        <Bar
-                          dataKey="value"
-                          name="Completion %"
-                          fill="#783eb0"
-                          radius={[7, 7, 0, 0]}
-                          maxBarSize={56}
-                        />
+                        <Legend iconType="circle" />
+                        <Bar dataKey="plannedP" name="Planned Completion (%)" fill="#b18a35" radius={[5, 5, 0, 0]} maxBarSize={36} />
+                        <Bar dataKey="actualP" name="Actual Completion (%)" fill="#783eb0" radius={[5, 5, 0, 0]} maxBarSize={36} />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -3022,25 +3094,39 @@ export default function App() {
                 <ChartBox
                   empty={!filtered.length}
                   title="Objective Progress"
-                  sub="Distribution across five schedule-performance categories"
+                  sub="Distribution of the five Objective Status Rating levels"
                 >
                   <div className="chart-content">
                     <ResponsiveContainer height="100%" width="100%">
                       <PieChart>
                         <Pie
-                          data={summarizeBy(filtered, (o) => o.status)}
+                          data={ratings.filter((r) => r.value > 0).map((r) => ({
+                            name: RATING_PROGRESS_LABELS[r.rating],
+                            count: r.value,
+                            fill: r.fill,
+                          }))}
                           dataKey="count"
                           nameKey="name"
                           cx="50%"
                           cy="48%"
                           outerRadius={100}
                           labelLine={false}
+                          label={({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+                            const angle = (-Number(midAngle) * Math.PI) / 180;
+                            const radius = Number(innerRadius) + (Number(outerRadius) - Number(innerRadius)) * 0.6;
+                            const x = Number(cx) + radius * Math.cos(angle);
+                            const y = Number(cy) + radius * Math.sin(angle);
+                            return (
+                              <text x={x} y={y} textAnchor="middle" dominantBaseline="central"
+                                fontSize={12} fontWeight={800} fill="#fff"
+                                stroke="#31223d" strokeWidth={2} paintOrder="stroke">
+                                {Math.round((percent ?? 0) * 100)}%
+                              </text>
+                            );
+                          }}
                         >
-                          {summarizeBy(filtered, (o) => o.status).map((s) => (
-                            <Cell
-                              key={s.name}
-                              fill={STATUS_COLORS[s.name] || "#8293ab"}
-                            />
+                          {ratings.filter((r) => r.value > 0).map((r) => (
+                            <Cell key={r.rating} fill={r.fill} />
                           ))}
                         </Pie>
                         <Legend
@@ -3057,7 +3143,7 @@ export default function App() {
                 className="ministry-kpi-chart"
                 empty={!scopedKpis.some((k) => kpiAchievement(k) !== null)}
                 title="KPI achievement by ministry"
-                sub="Average of KPI rows, matching Analysis column O; scorecards above average objective results."
+                sub="Actual average KPI achievement compared with the 100% target benchmark (the KPIs have different units and targets)."
               >
                 <div className="chart-content">
                   <ResponsiveContainer width="100%" height="100%">
@@ -3068,15 +3154,15 @@ export default function App() {
                             .filter((o) => o.ministry === s.name)
                             .map((o) => o.id),
                         );
+                        const measured = avg(
+                          scopedKpis
+                            .filter((k) => ids.has(k.objectiveId))
+                            .map(kpiAchievement),
+                        );
                         return {
                           name: s.name,
-                          value: withPercent(
-                            avg(
-                              scopedKpis
-                                .filter((k) => ids.has(k.objectiveId))
-                                .map(kpiAchievement),
-                            ),
-                          ),
+                          targetBenchmark: measured === null ? null : 100,
+                          actualAchievement: withPercent(measured),
                         };
                       })}
                       layout="vertical"
@@ -3090,17 +3176,10 @@ export default function App() {
                         width={150}
                         tick={{ fontSize: 13, fill: "#46566d" }}
                       />
-                      <Tooltip
-                        contentStyle={tooltipStyle}
-                        formatter={(v) => [`${v}%`, "KPI achievement"]}
-                      />
-                      <Bar
-                        dataKey="value"
-                        name="KPI achievement"
-                        fill="#612b87"
-                        radius={[0, 5, 5, 0]}
-                        maxBarSize={28}
-                      />
+                      <Tooltip contentStyle={tooltipStyle} formatter={(v) => [`${v}%`]} />
+                      <Legend iconType="circle" />
+                      <Bar dataKey="targetBenchmark" name="KPI target (100% benchmark)" fill="#b18a35" radius={[0, 5, 5, 0]} maxBarSize={19} />
+                      <Bar dataKey="actualAchievement" name="Actual KPI achievement" fill="#612b87" radius={[0, 5, 5, 0]} maxBarSize={19} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
