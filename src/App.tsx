@@ -2090,7 +2090,7 @@ export default function App() {
               <div className="metric-grid dashboard-metrics">
                 <Metric
                   icon={GoalIcon}
-                  label="Strategic goals represented"
+                  label="BBC Strategic Goals"
                   value={overview.goals}
                   sub="Goals with matching objectives"
                   details={
