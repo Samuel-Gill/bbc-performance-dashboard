@@ -1088,35 +1088,12 @@ function Welcome({
           </div>
         </div>
         <div className="welcome-art" aria-hidden="true">
-          <div className="church-arch">
-            <svg viewBox="0 0 200 240">
-              <path
-                d="M100 38v45m-18-27h36"
-                stroke="currentColor"
-                strokeWidth="8"
-                strokeLinecap="round"
-              />
-              <path
-                d="M39 211v-91l61-45 61 45v91H39Z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="5"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M84 211v-43a16 16 0 0 1 32 0v43M61 135v22m78-22v22"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="5"
-                strokeLinecap="round"
-              />
-              <path
-                d="M21 215h158"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
-            </svg>
+          <div className="church-arch church-logo-frame">
+            <img
+              src="/bethlehem-baptist-church-logo.png"
+              alt=""
+              className="church-logo"
+            />
           </div>
           <div className="art-caption">
             Growing together,

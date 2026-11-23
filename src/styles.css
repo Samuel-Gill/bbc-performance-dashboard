@@ -2619,6 +2619,15 @@ td.two-line span {
   height: 205px;
   color: #ecdcae;
 }
+.church-logo-frame {
+  overflow: hidden;
+}
+.church-logo {
+  width: 174px;
+  height: 174px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 16px rgba(46, 14, 73, 0.24));
+}
 .art-caption {
   text-align: center;
   font-size: 12px;
