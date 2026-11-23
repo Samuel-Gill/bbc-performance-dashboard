@@ -1087,14 +1087,15 @@ function Welcome({
             </button>
           </div>
         </div>
-        <div className="welcome-art" aria-hidden="true">
-          <div className="church-arch church-logo-frame">
-            <img
-              src="/bethlehem-baptist-church-logo.png"
-              alt=""
-              className="church-logo"
-            />
-          </div>
+        <div className="welcome-art">
+          <img
+            src="/bbc-church-logo.png"
+            alt="Bethlehem Baptist Church logo"
+            className="church-logo"
+            width={220}
+            height={220}
+            style={{ width: "min(220px, 100%)", height: "auto", display: "block" }}
+          />
           <div className="art-caption">
             Growing together,
             <br />
