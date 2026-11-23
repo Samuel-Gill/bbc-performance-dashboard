@@ -1134,9 +1134,21 @@ function Welcome({
       <section aria-label="Strategic summary" className="welcome-counts">
         <Metric
           icon={GoalIcon}
-          label="Strategic goals"
+          label="BBC Strategic Goals"
           value={data.goals.length}
           sub="All goals in this workspace"
+          details={
+            data.goals.length > 0 ? (
+              <ul className="welcome-goal-list" aria-label="BBC strategic goal names">
+                {data.goals.map((goal) => (
+                  <li key={goal.id} title={`${goal.id} — ${goal.title}`}>
+                    <span className="welcome-goal-id">{goal.id}</span>
+                    <span className="welcome-goal-title">{goal.title}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : undefined
+          }
         />
         <Metric
           icon={Target}
@@ -2090,7 +2102,7 @@ export default function App() {
               <div className="metric-grid dashboard-metrics">
                 <Metric
                   icon={GoalIcon}
-                  label="Strategic goals represented"
+                  label="BBC Strategic Goals"
                   value={overview.goals}
                   sub="Goals with matching objectives"
                   details={

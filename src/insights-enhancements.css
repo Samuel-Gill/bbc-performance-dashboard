@@ -30,7 +30,8 @@
 }
 .overview-path > span { display: inline-flex; align-items: center; gap: 7px; }
 .overview-path svg { color: #7f6d88; }
-.glossary-nav-item { padding-left: 14px; font-size: 0.96em; }
+/* Glossary is a top-level navigation item, aligned like Insights and Goals. */
+.sidebar nav button .glossary-nav-item { padding-left: 0; font-size: inherit; }
 .glossary-page .glossary-intro { margin-bottom: 0; }
 .glossary-page .glossary-intro h2 { color: #291437; font-size: 22px; }
 .glossary-page .glossary-intro p { color: #51435c; font-size: 15px; line-height: 1.6; margin-top: 7px; }
@@ -45,11 +46,81 @@
 .glossary-rating-dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; flex: 0 0 14px; }
 .glossary-footnote { margin: 14px 0 0; color: #54465d; font-size: 14px; }
 .ministry-export-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 11px 16px; font-size: 14px; color: #321847; }
-.ministry-report-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.ministry-report-actions select { min-width: 170px; max-width: 240px; width: 100%; border: 1px solid #cfd7e2; border-radius: 8px; padding: 9px 10px; background: #fff; color: #2e2438; font: inherit; font-size: 14px; }
-.ministry-pdf-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 38px; padding: 8px 12px; white-space: nowrap; font-size: 14px; }
+/* Keep the ministry selector and PDF action on one tidy row on desktop. */
+.ministry-report-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  margin-left: auto;
+  min-width: 0;
+}
+.ministry-report-actions label { display: block; flex: 0 0 auto; width: 230px; min-width: 0; }
+/* Preserve the accessible label without rendering it above the dropdown. */
+.ministry-report-actions .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.ministry-report-actions select {
+  box-sizing: border-box;
+  display: block;
+  width: 230px;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  border: 1px solid #cfd7e2;
+  border-radius: 9px;
+  padding: 9px 34px 9px 12px;
+  background: #fff;
+  color: #2e2438;
+  font: inherit;
+  font-size: 14px;
+}
+.ministry-report-actions select:focus-visible,
+.ministry-report-actions .ministry-pdf-button:focus-visible {
+  outline: 3px solid #b991d7;
+  outline-offset: 2px;
+}
+.ministry-report-actions .ministry-pdf-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 9px 14px;
+  white-space: nowrap;
+  font-size: 14px;
+  background: #612b87;
+  border: 1px solid #612b87;
+  color: #fff;
+}
+.ministry-report-actions .ministry-pdf-button:not(:disabled):hover {
+  background: #482063;
+  border-color: #482063;
+}
 .ministry-pdf-button:disabled { opacity: 0.55; cursor: not-allowed; }
 .glossary-page, .ministry-report-actions { min-width: 0; }
+/* Narrow content areas: move controls to a second, still-aligned row. */
+@media (max-width: 1240px) {
+  .section-head:has(> .ministry-report-actions) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ministry-report-actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
 
 @media (max-width: 1320px) { .dashboard-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 920px) { .dashboard-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -61,9 +132,10 @@
   .dashboard-metrics .metric-sub { font-size: 11px; }
   .glossary-entry { grid-template-columns: 1fr; gap: 5px; }
   .glossary-section { padding: 16px; }
-  .ministry-report-actions { width: 100%; }
-  .ministry-report-actions label, .ministry-report-actions select { flex: 1; min-width: 0; max-width: none; }
-  .ministry-pdf-button { width: auto; flex: 0 0 auto; }
+  .ministry-report-actions { flex-direction: column; align-items: stretch; }
+  .ministry-report-actions label,
+  .ministry-report-actions select,
+  .ministry-report-actions .ministry-pdf-button { width: 100%; max-width: none; }
 }
 @media (max-width: 350px) {
   .dashboard-metrics { grid-template-columns: minmax(0, 1fr); }
