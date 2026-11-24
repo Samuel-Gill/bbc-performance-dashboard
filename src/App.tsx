@@ -1152,21 +1152,21 @@ function Welcome({
         />
         <Metric
           icon={Target}
-          label="Ministry objectives"
+          label="Ministry Objectives"
           value={data.objectives.length}
           sub="Current objective records"
           tone="teal"
         />
         <Metric
           icon={Activity}
-          label="KPIs tracked"
+          label="KPI’s Tracked"
           value={data.kpis.length}
           sub="Measures linked to objectives"
           tone="purple"
         />
         <Metric
           icon={CheckCircle2}
-          label="Completed objectives"
+          label="Completed Objectives"
           value={snapshot.completed}
           sub="Actual completion at 100%"
           tone="green"
@@ -2021,7 +2021,7 @@ export default function App() {
                         {
                           ministry: "Ministry",
                           goalId: "Goal",
-                          role: "Assigned role",
+                          role: "Assigned Role",
                           rating: "Objective Status Rating",
                           status: "Objective Progress",
                           priority: "Priority",
@@ -2204,7 +2204,7 @@ export default function App() {
               <div className="chart-grid">
                 <ChartBox
                   empty={!filtered.length}
-                  title="Goal performance"
+                  title="Goal Performance"
                   sub="Actual completion vs. planned completion (%)"
                 >
                   <div className="chart-content">
@@ -2255,7 +2255,7 @@ export default function App() {
                 </ChartBox>
                 <ChartBox
                   empty={!filtered.length}
-                  title="Objective Status Rating mix"
+                  title="Objective Status Rating Mix"
                   sub="Distribution across five performance levels"
                 >
                   <div className="rating-chart">
@@ -2305,7 +2305,7 @@ export default function App() {
               <div className="chart-grid">
                 <ChartBox
                   empty={!filtered.length}
-                  title="Ministry risk profile"
+                  title="Ministry Risk Profile"
                   sub="Overdue first; remaining objectives grouped by status rating"
                 >
                   <div className="chart-content">
@@ -2436,7 +2436,7 @@ export default function App() {
               </div>
               <Card className="table-card">
                 <SectionHead
-                  title="Attention required"
+                  title="Attention Required"
                   description="Priority-ranked exceptions based on workbook severity logic."
                   action={
                     <button
@@ -2744,7 +2744,7 @@ export default function App() {
                   </div>
                   <div className="mini-metrics">
                     <div>
-                      <span>KPIs meeting target</span>
+                      <span>KPIs Meeting Target</span>
                       <strong>
                         {
                           rows.filter(
@@ -2764,7 +2764,7 @@ export default function App() {
                       </strong>
                     </div>
                     <div>
-                      <span>Average KPI achievement</span>
+                      <span>Average KPI Achievement</span>
                       <strong>{fmt(avg(rows.map(kpiAchievement)))}</strong>
                     </div>
                   </div>
@@ -2980,7 +2980,7 @@ export default function App() {
               </Card>
               <Card className="table-card">
                 <SectionHead
-                  title="Ministry scorecard"
+                  title="Ministry Scorecard"
                   description="Team-level progress and areas that need intervention. Download a PDF for a single selected ministry."
                   action={
                     <div className="ministry-report-actions">
@@ -3137,7 +3137,7 @@ export default function App() {
               <ChartBox
                 className="ministry-kpi-chart"
                 empty={!scopedKpis.some((k) => kpiAchievement(k) !== null)}
-                title="KPI achievement by ministry"
+                title="KPI Achievement by Ministry"
                 sub="Actual average KPI achievement compared with the 100% target benchmark (the KPIs have different units and targets)."
               >
                 <div className="chart-content">
@@ -3173,8 +3173,8 @@ export default function App() {
                       />
                       <Tooltip contentStyle={tooltipStyle} formatter={(v) => [`${v}%`]} />
                       <Legend iconType="circle" />
-                      <Bar dataKey="targetBenchmark" name="KPI target (100% benchmark)" fill="#b18a35" radius={[0, 5, 5, 0]} maxBarSize={19} />
-                      <Bar dataKey="actualAchievement" name="Actual KPI achievement" fill="#612b87" radius={[0, 5, 5, 0]} maxBarSize={19} />
+                      <Bar dataKey="targetBenchmark" name="KPI Target (100% benchmark)" fill="#b18a35" radius={[0, 5, 5, 0]} maxBarSize={19} />
+                      <Bar dataKey="actualAchievement" name="Actual KPI Achievement" fill="#612b87" radius={[0, 5, 5, 0]} maxBarSize={19} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
